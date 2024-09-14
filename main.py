@@ -1,10 +1,10 @@
 from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
+import pandas as pd
 
 url = 'https://projectv.gg/tournaments/q-division-2-3-2024?stage=matches'
 team_selector = '.match-table-item__title'
 date_selector = '.match-table-item__date'
-
 
 def scroll_to_bottom(page):
     previous_height = page.evaluate("document.body.scrollHeight")
@@ -33,11 +33,21 @@ def main():
 
     # Teamnamen und Daten extrahieren
     teams = [div.text.strip() for div in team_divs]
-    dates = [div.text.strip().split()[0] + ' ' + div.text.strip().split()[1] for div in date_divs]
+    dates = [div.text.strip().split() for div in date_divs]
 
-    # Teams und Daten ausgeben
+    # Daten in ein DataFrame speichern
+    data = []
     for i in range(0, len(teams), 2):
         match_date = dates[i // 2]
-        print(f"{match_date} - {teams[i]} vs. {teams[i + 1]}")
+        date = match_date[0]
+        time = match_date[1]
+        team1 = teams[i]
+        team2 = teams[i + 1]
+        data.append([date, time, team1, team2])
+
+    df = pd.DataFrame(data, columns=['Datum', 'Uhrzeit', 'Team 1', 'Team 2'])
+
+    # DataFrame in eine Excel-Datei exportieren
+    df.to_excel('matches.xlsx', index=False)
 
 main()
