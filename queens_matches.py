@@ -50,4 +50,4 @@ def main():
     # DataFrame in eine Excel-Datei exportieren
     df.to_excel('matches.xlsx', index=False)
 
-main()
+    return "queens_matches wurde erfolgreich ausgeführt!"
