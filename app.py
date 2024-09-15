@@ -8,7 +8,7 @@ app.secret_key = os.urandom(24)
 # Startseite
 @app.route("/", methods=["GET", "POST"])
 def index():
-    if request.method == "POST" and "button1" in request.form:
+    if request.method == "POST" and "export_matches" in request.form:
         url = request.form['url']
         message, file_path = main(url)
         session['message'] = message
