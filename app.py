@@ -1,6 +1,6 @@
 import os
 from flask import Flask, render_template, request, redirect, url_for, send_file, session
-from queens_matches import main
+from export_matches import main
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
@@ -9,7 +9,8 @@ app.secret_key = os.urandom(24)
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST" and "button1" in request.form:
-        message, file_path = main()
+        url = request.form['url']
+        message, file_path = main(url)
         session['message'] = message
         session['file_path'] = file_path
         return redirect(url_for('result'))
