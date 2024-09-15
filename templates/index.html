@@ -7,14 +7,11 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-
-    <!-- Header Section -->
     <header>
         <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Project V Logo">
-        <h1>PROJECT V</h1>
+        <h1>Project V</h1>
     </header>
 
-    <!-- Button Section -->
     <div class="button-container">
         <form method="POST">
             <button type="submit" name="button1">Queens Matches exportieren</button>
@@ -23,16 +20,19 @@
         <form method="POST">
             <button type="submit" name="button2">Turnier anlegen</button>
         </form>
-
-        <form method="POST">
-            <button type="submit" name="button3">Placeholder</button>
-        </form>
     </div>
 
-    <!-- Message Output Section -->
-    <div class="message">
-        <p>{{ message }}</p>
+    {% if file_ready %}
+    <div>
+        <div class="message">
+            <p>{{ message }}</p>
+        </div>
+
+        <a href="{{ url_for('download_file') }}">
+            <button type="button">Download Excel</button>
+        </a>
     </div>
+    {% endif %}
 
 </body>
 </html>

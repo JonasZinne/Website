@@ -1,6 +1,7 @@
+import os
+import pandas as pd
 from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
-import pandas as pd
 
 url = 'https://projectv.gg/tournaments/q-division-2-3-2024?stage=matches'
 team_selector = '.match-table-item__title'
@@ -26,6 +27,12 @@ def fetch_page_content(url):
     return content
     
 def main():
+    storage_dir = 'storage' # Speicherort 
+    
+    if not os.path.exists(storage_dir):
+        os.makedirs(storage_dir)
+    
+    # Datenverarbeitung
     html_content = fetch_page_content(url)
     soup = BeautifulSoup(html_content, 'html.parser')
     team_divs = soup.select(team_selector)
@@ -47,7 +54,10 @@ def main():
 
     df = pd.DataFrame(data, columns=['Datum', 'Uhrzeit', 'Team 1', 'Team 2'])
 
-    # DataFrame in eine Excel-Datei exportieren
-    df.to_excel('matches.xlsx', index=False)
+    # Datei in 'storage' exportieren
+    file_path = os.path.join(storage_dir, 'matches.xlsx')
+    df.to_excel(file_path, index=False)
 
-    return "queens_matches wurde erfolgreich ausgeführt!"
+    message = "Queens Matches stehen zum Download bereit:"
+
+    return message, file_path
