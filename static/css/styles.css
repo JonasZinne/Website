@@ -3,13 +3,14 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #ffffff;
+    background-color: #f4f4f9;
 }
 
+/* Header */
 header {
-    background-color: #333;
+    background-color: #1f1f1f;;
     color: white;
-    padding: 20px;
+    padding: 30px;
     text-align: center;
 }
 
@@ -17,49 +18,68 @@ header img {
     max-width: 100px;
     display: block;
     margin: 0 auto 10px;
+    transition: transform 0.3s ease;
+}
+
+header img:hover {
+    transform: scale(1.2);
 }
 
 header h1 {
     margin: 0;
+    letter-spacing: 2px;
 }
 
 /* Main */
 main {
     padding: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
+/* Form Section */
 .form-section {
-    background-color: #03fff2;
+    background-color: #ccf2f4;
     padding: 20px;
     margin-bottom: 20px;
+    border-radius: 10px;
 }
 
 .form-section h2 {
     margin-top: 0;
 }
 
+/* Input */
 .url-input {
-    width: 500px;
-    padding: 10px;
-    border: 3px solid #000000;
-    border-radius: 5px;
+    width: 600px;
+    padding: 12px;
+    border: 3px solid #1f1f1f;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+.url-input:focus {
+    border-color: #03a9f4;
+    outline: none;
 }
 
 /* Button */
 button, .button {
-    background-color: #333;
+    background-color: #03a9f4;
     color: white;
-    padding: 10px 20px;
+    padding: 12px 25px;
     border: none;
-    border-radius: 5px;
+    border-radius: 50px;
     cursor: pointer;
+    font-size: 16px;
     text-decoration: none;
     display: inline-block;
-    font-size: 15px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 button:hover, .button:hover {
-    background-color: #747373;
+    background-color: #0288d1;
 }
 
 /* Message */
@@ -73,10 +93,12 @@ button:hover, .button:hover {
 
 .message p {
     margin: 0;
+    font-size: 16px;
+    color: #333;
 }
 
 footer {
-    background-color: #333;
+    background-color: #1f1f1f;
     color: white;
     text-align: center;
     padding: 10px;

@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project V - Control Panel</title>
+    <title>Control Panel</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
     <body>
         <header>
             <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Project V Logo">
-            <h1>Project V</h1>
+            <h1>PROJECT V</h1>
         </header>
     
         <main>
             <section class="form-section">
                 <h2>Matches exportieren</h2>
                 <form method="POST">
-                    <input type="text" name="url" class="url-input" placeholder="URL der 'Matches' Seite" required>
+                    <input type="text" name="url" class="url-input" autocomplete="off" placeholder="URL der 'Matches' Seite" required>
                     <button type="submit" name="export_matches">Exportieren</button>
                 </form>
 
