@@ -1,0 +1,154 @@
+/* General */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f7fa;
+}
+
+/* Header */
+header {
+    background: linear-gradient(135deg, #1f1f1f, #484848);
+    color: white;
+    padding: 30px;
+    text-align: center;
+}
+
+header img {
+    max-width: 100px;
+    display: block;
+    margin: 0 auto 10px;
+    transition: transform 0.3s ease;
+}
+
+header img:hover {
+    transform: scale(1.2);
+}
+
+header h1 {
+    margin: 0;
+    letter-spacing: 2px;
+}
+
+/* Main */
+main {
+    padding: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Form Section */
+.form-section {
+    background-color: #ccf2f4;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+}
+
+.form-section h2 {
+    margin-top: 0;
+}
+
+/* Input */
+.url-input {
+    width: 100%;
+    max-width: 600px;
+    padding: 12px;
+    border: 2px solid #1f1f1f;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+.url-input:focus {
+    border-color: #03a9f4;
+    outline: none;
+}
+
+/* Button */
+button, .button {
+    background-color: #03a9f4;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+button:hover, .button:hover {
+    background-color: #0288d1;
+}
+
+button:active, .button:active {
+    transform: scale(0.97);
+}
+
+/* Loading Indicator */
+#loadingIndicator {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    z-index: 1000;
+    font-family: Arial, sans-serif;
+}
+
+#loadingIndicator p {
+    font-size: 1.5em;
+    color: #333;
+}
+
+/* Spinner Animation */
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 8px solid rgba(0, 0, 0, 0.1);
+    border-top: 8px solid #333;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Message */
+.message-section {
+    margin-top: 20px;
+}
+
+.message {
+    padding: 10px;
+}
+
+.message p {
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+}
+
+footer {
+    background-color: #1f1f1f;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    font-size: 14px;
+}

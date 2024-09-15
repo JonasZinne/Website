@@ -1,8 +1,9 @@
+import os
+import re
+import pandas as pd
 from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
-import pandas as pd
 
-url = 'https://projectv.gg/tournaments/q-division-2-3-2024?stage=matches'
 team_selector = '.match-table-item__title'
 date_selector = '.match-table-item__date'
 
@@ -18,14 +19,24 @@ def scroll_to_bottom(page):
 
 def fetch_page_content(url):
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False)
+        browser = p.chromium.launch(headless=True) # False = sehen
         with browser.new_page() as page:
             page.goto(url)
             scroll_to_bottom(page)
             content = page.content()
     return content
     
-def main():
+def main(url):
+    storage_dir = 'storage' # Speicherort 
+    
+    if not os.path.exists(storage_dir):
+        os.makedirs(storage_dir)
+
+    # Division extrahieren
+    match = re.search(r'division-[\w-]+', url)
+    division = match.group(0) if match else "Unbekannte Division"    
+    
+    # Datenverarbeitung
     html_content = fetch_page_content(url)
     soup = BeautifulSoup(html_content, 'html.parser')
     team_divs = soup.select(team_selector)
@@ -47,7 +58,10 @@ def main():
 
     df = pd.DataFrame(data, columns=['Datum', 'Uhrzeit', 'Team 1', 'Team 2'])
 
-    # DataFrame in eine Excel-Datei exportieren
-    df.to_excel('matches.xlsx', index=False)
+    # Datei in 'storage' exportieren
+    file_path = os.path.join(storage_dir, 'Matches.xlsx')
+    df.to_excel(file_path, index=False)
 
-main()
+    message = f"Matches für {division} sind zum Download bereit:"
+
+    return message, file_path

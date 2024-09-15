@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control Panel</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.png') }}" type="image/png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <header>
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Project V Logo">
+        <h1>PROJECT V</h1>
+    </header>
+
+    <main>
+        <section class="form-section">
+            <h2>Matches exportieren</h2>
+            <form method="POST" action="/" id="exportForm">
+                <input type="text" name="url" class="url-input" autocomplete="off" placeholder="URL der 'Matches' Seite" required>
+                <button type="submit" name="export_matches">Exportieren</button>
+            </form>
+
+            <div id="loadingIndicator" style="display: none;">
+                <div class="spinner"></div>
+                <p>Laden...</p>
+            </div>
+
+            {% if file_ready %}
+                <section class="message-section">
+                    <div class="message">
+                        <p>{{ message }}</p>
+                    </div>
+
+                    <a href="{{ url_for('download_file') }}" class="button">Download Excel</a>
+                </section>
+            {% endif %}
+        </section>
+
+        <section class="form-section">
+            <h2>Turnier anlegen</h2>
+            <form method="POST">
+                <button type="submit" name="create_tournament">Coming Soon</button>
+            </form>
+        </section>            
+    </main>
+
+    <footer>
+        <p>&copy; Jonas Zinnecker. Alle Rechte vorbehalten.</p>
+    </footer>
+
+    <script>
+        document.getElementById('exportForm').addEventListener('submit', function() {
+            document.getElementById('loadingIndicator').style.display = 'flex';
+        });
+    </script>
+</body>
+</html>
