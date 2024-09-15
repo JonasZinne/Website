@@ -6,41 +6,52 @@
     <title>Control Panel</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
-    <body>
-        <header>
-            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Project V Logo">
-            <h1>PROJECT V</h1>
-        </header>
-    
-        <main>
-            <section class="form-section">
-                <h2>Matches exportieren</h2>
-                <form method="POST" action="/">
-                    <input type="text" name="url" class="url-input" autocomplete="off" placeholder="URL der 'Matches' Seite" required>
-                    <button type="submit" name="export_matches">Exportieren</button>
-                </form>
+<body>
+    <header>
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Project V Logo">
+        <h1>PROJECT V</h1>
+    </header>
 
-                {% if file_ready %}
-                    <section class="message-section">
-                        <div class="message">
-                            <p>{{ message }}</p>
-                        </div>
-            
-                        <a href="{{ url_for('download_file') }}" class="button">Download Excel</a>
-                    </section>
-                {% endif %}
-            </section>
+    <main>
+        <section class="form-section">
+            <h2>Matches exportieren</h2>
+            <form method="POST" action="/" id="exportForm">
+                <input type="text" name="url" class="url-input" autocomplete="off" placeholder="URL der 'Matches' Seite" required>
+                <button type="submit" name="export_matches">Exportieren</button>
+            </form>
 
-            <section class="form-section">
-                <h2>Turnier anlegen</h2>
-                <form method="POST">
-                    <button type="submit" name="create_tournament">Coming Soon</button>
-                </form>
-            </section>            
-        </main>
-    
-        <footer>
-            <p>&copy; Jonas Zinnecker. Alle Rechte vorbehalten.</p>
-        </footer>
-    </body>
+            <div id="loadingIndicator" style="display: none;">
+                <div class="spinner"></div>
+                <p>Laden...</p>
+            </div>
+
+            {% if file_ready %}
+                <section class="message-section">
+                    <div class="message">
+                        <p>{{ message }}</p>
+                    </div>
+
+                    <a href="{{ url_for('download_file') }}" class="button">Download Excel</a>
+                </section>
+            {% endif %}
+        </section>
+
+        <section class="form-section">
+            <h2>Turnier anlegen</h2>
+            <form method="POST">
+                <button type="submit" name="create_tournament">Coming Soon</button>
+            </form>
+        </section>            
+    </main>
+
+    <footer>
+        <p>&copy; Jonas Zinnecker. Alle Rechte vorbehalten.</p>
+    </footer>
+
+    <script>
+        document.getElementById('exportForm').addEventListener('submit', function() {
+            document.getElementById('loadingIndicator').style.display = 'flex';
+        });
+    </script>
+</body>
 </html>
