@@ -1,4 +1,5 @@
 import os
+import re
 import pandas as pd
 from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
@@ -18,7 +19,7 @@ def scroll_to_bottom(page):
 
 def fetch_page_content(url):
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False)
+        browser = p.chromium.launch(headless=True) # False = sehen
         with browser.new_page() as page:
             page.goto(url)
             scroll_to_bottom(page)
@@ -30,6 +31,10 @@ def main(url):
     
     if not os.path.exists(storage_dir):
         os.makedirs(storage_dir)
+
+    # Division extrahieren
+    match = re.search(r'division-[\w-]+', url)
+    division = match.group(0) if match else "Unbekannte Division"    
     
     # Datenverarbeitung
     html_content = fetch_page_content(url)
@@ -54,9 +59,9 @@ def main(url):
     df = pd.DataFrame(data, columns=['Datum', 'Uhrzeit', 'Team 1', 'Team 2'])
 
     # Datei in 'storage' exportieren
-    file_path = os.path.join(storage_dir, 'matches.xlsx')
+    file_path = os.path.join(storage_dir, 'Matches.xlsx')
     df.to_excel(file_path, index=False)
 
-    message = "Matches stehen zum Download bereit:"
+    message = f"Matches für {division} sind zum Download bereit:"
 
     return message, file_path
