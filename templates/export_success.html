@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Export</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.png') }}" type="image/png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <header>
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Project V Logo">
+        <h1>PROJECT V</h1>
+    </header>
+
+    <main>
+        <section class="section">
+            <h2>Export Erfolgreich</h2>
+            <p>{{ message }}</p>
+            
+            <a href="{{ url_for('download_matches') }}" class="button">Download Excel</a>
+            <a href="{{ url_for('index') }}" class="button">Zurück zur Startseite</a>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; Jonas Zinnecker. Alle Rechte vorbehalten.</p>
+    </footer>
+</body>
+</html>
