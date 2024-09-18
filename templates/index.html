@@ -17,7 +17,11 @@
         <section class="section">
             <h2>Matches exportieren</h2>
             <form method="POST" action="/" id="exportForm">
-                <input type="text" name="url" class="url-input" autocomplete="off" placeholder="URL der 'Matches' Seite" required>
+                <input 
+                    type="url" name="url" class="url-input" autocomplete="off" 
+                    placeholder="URL der 'Matches' Seite" 
+                    required pattern="https?://.+"
+                >
                 <button type="submit" name="export_matches">Exportieren</button>
             </form>
 
