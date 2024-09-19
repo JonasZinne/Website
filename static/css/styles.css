@@ -54,6 +54,12 @@ main {
     color: #333;
 }
 
+/* Dashboard */
+.dashboard-options {
+    display: flex;
+    gap: 20px;
+}
+
 /* Input */
 .url-input {
     width: 100%;

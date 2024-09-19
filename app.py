@@ -5,30 +5,25 @@ from export_matches import main
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
-# Startseite
-@app.route("/", methods=["GET", "POST"])
+# Dashboard (Index)
+@app.route("/", methods=["GET"])
 def index():
-    if request.method == "POST" and "export_matches" in request.form:
+    return render_template("index.html")
+
+# Export Matches
+@app.route("/export_matches", methods=["GET", "POST"])
+def export_matches():
+    message = None
+    file_path = None
+    
+    if request.method == "POST":
         url = request.form['url']
         message, file_path = main(url)
         
         session['message'] = message
         session['file_path'] = file_path
-        
-        return redirect(url_for('export_success'))
     
-    return render_template("index.html")
-
-# Erfolgsseite nach dem Export
-@app.route("/export_success")
-def export_success():
-    message = session.get('message', '')
-    file_path = session.get('file_path', None)
-    
-    if not file_path:
-        return redirect(url_for('index'))
-    
-    return render_template("export_success.html", message=message, file_ready=(file_path is not None))
+    return render_template("export_matches.html", message=message, file_ready=(file_path is not None))
 
 # Download der Datei
 @app.route("/download_matches")
@@ -39,6 +34,11 @@ def download_matches():
         return send_file(file_path, as_attachment=True)
     else:
         return "Datei nicht gefunden", 404
+
+# Turnier anlegen
+@app.route("/create_tournament", methods=["GET"])
+def create_tournament():
+    return render_template("create_tournament.html")
 
 if __name__ == "__main__":
     app.run(debug=True)

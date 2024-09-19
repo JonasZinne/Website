@@ -1,52 +1,14 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Control Panel</title>
-    <link rel="icon" href="{{ url_for('static', filename='images/favicon.png') }}" type="image/png">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-</head>
-<body>
-    <header>
-        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Project V Logo">
-        <h1>PROJECT V</h1>
-    </header>
+{% extends 'base.html' %}
 
-    <main>
-        <section class="section">
-            <h2>Matches exportieren</h2>
-            <form method="POST" action="/" id="exportForm">
-                <input 
-                    type="url" name="url" class="url-input" autocomplete="off" 
-                    placeholder="URL der 'Matches' Seite" 
-                    required pattern="https?://.+"
-                >
-                <button type="submit" name="export_matches">Exportieren</button>
-            </form>
+{% block title %}Control Panel{% endblock %}
 
-            <div id="loadingIndicator" style="display: none;">
-                <div class="spinner"></div>
-                <p>Laden...</p>
-            </div>
-        </section>
-
-        <section class="section">
-            <h2>Turnier anlegen</h2>
-            <form method="POST">
-                <button type="submit" name="create_tournament" disabled>Coming Soon</button>
-            </form>
-        </section>            
-    </main>
-
-    <footer>
-        <p>&copy; Jonas Zinnecker. Alle Rechte vorbehalten.</p>
-    </footer>
-
-    <script>
-        document.getElementById('exportForm').addEventListener('submit', function() {
-            document.getElementById('loadingIndicator').style.display = 'flex';
-        });
-    </script>
-</body>
-</html>
+{% block content %}
+    <section class="section">
+        <h2>Control Panel</h2>
+        
+        <div class="dashboard-options">
+            <a href="{{ url_for('export_matches') }}" class="button">Export Matches</a>
+            <a href="{{ url_for('create_tournament') }}" class="button">Turnier anlegen</a>
+        </div>
+    </section>
+{% endblock %}
