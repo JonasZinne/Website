@@ -17,7 +17,7 @@ def export_matches():
     file_path = None
     
     if request.method == "POST":
-        url = request.form['url']
+        url = request.form.get('url')
         message, file_path = main(url)
         
         session['message'] = message
