@@ -1,21 +1,23 @@
 /* General */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f5f7fa;
+    background-color: #ccf2f4;
+    line-height: 1.6;
 }
 
 /* Header */
 header {
     background: linear-gradient(135deg, #1f1f1f, #484848);
     color: white;
-    padding: 30px;
+    padding: 20px;
     text-align: center;
+    border-bottom: 5px solid #03a9f4;
 }
 
 header img {
-    max-width: 100px;
+    max-width: 80px;
     display: block;
     margin: 0 auto 10px;
     transition: transform 0.3s ease;
@@ -28,6 +30,7 @@ header img:hover {
 header h1 {
     margin: 0;
     letter-spacing: 2px;
+    font-size: 2.2em;
 }
 
 /* Main */
@@ -37,16 +40,24 @@ main {
     margin: 0 auto;
 }
 
-/* Form Section */
-.form-section {
-    background-color: #ccf2f4;
+/* Section */
+.section {
+    background-color: #ffffff;
     padding: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     border-radius: 12px;
 }
 
-.form-section h2 {
+.section h2 {
     margin-top: 0;
+    font-size: 1.8em;
+    color: #333;
+}
+
+/* Dashboard */
+.dashboard-options {
+    display: flex;
+    gap: 20px;
 }
 
 /* Input */
@@ -58,6 +69,7 @@ main {
     border-radius: 8px;
     font-size: 16px;
     transition: border-color 0.3s ease;
+    margin-right: 10px;
 }
 
 .url-input:focus {
@@ -76,7 +88,8 @@ button, .button {
     font-size: 16px;
     text-decoration: none;
     display: inline-block;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-right: 10px;
 }
 
 button:hover, .button:hover {
@@ -106,6 +119,7 @@ button:active, .button:active {
 #loadingIndicator p {
     font-size: 1.5em;
     color: #333;
+    margin-top: 10px;
 }
 
 /* Spinner Animation */
@@ -127,21 +141,7 @@ button:active, .button:active {
     }
 }
 
-/* Message */
-.message-section {
-    margin-top: 20px;
-}
-
-.message {
-    padding: 10px;
-}
-
-.message p {
-    margin: 0;
-    font-size: 16px;
-    color: #333;
-}
-
+/* Footer */
 footer {
     background-color: #1f1f1f;
     color: white;
@@ -151,4 +151,5 @@ footer {
     width: 100%;
     bottom: 0;
     font-size: 14px;
+    border-top: 5px solid #03a9f4;
 }
