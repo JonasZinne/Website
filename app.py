@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request, redirect, url_for, send_file, session
+from flask import Flask, render_template, request, send_file, session
 from export_matches import main
 
 app = Flask(__name__)
@@ -18,8 +18,8 @@ def export_matches():
     
     if request.method == "POST":
         url = request.form.get('url')
-        message, file_path = main(url)
         
+        message, file_path = main(url)      
         session['message'] = message
         session['file_path'] = file_path
     
