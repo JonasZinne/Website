@@ -1,7 +1,7 @@
 import os
 from flask import Flask, render_template, request, send_file, session
 from export_matches import main as export_matches_main
-from export_vetos import main as export_vetos_main
+from export_vetos import main as export_vetos_main, MAPS, TEAMS
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
@@ -45,15 +45,12 @@ def download_matches():
 @app.route("/export_vetos", methods=["GET", "POST"])
 def export_vetos():
     session['can_download_matches'] = False
-    message = None
-    file_path = None
+    veto_result = None
     
     if request.method == "POST":       
-        message, file_path = export_vetos_main()      
-        session['message'] = message
-        session['file_path'] = file_path
+        veto_result = export_vetos_main(request.form)  
     
-    return render_template("export_vetos.html", message=message, file_ready=(file_path is not None))
+    return render_template("export_vetos.html", maps=MAPS, teams=TEAMS, veto_result=veto_result)
 
 # Turnier anlegen
 @app.route("/create_tournament", methods=["GET"])
