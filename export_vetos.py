@@ -7,6 +7,7 @@ def choose_side(side_choice):
 def perform_veto_process(data, index):
     team_a = data.get(f'team_a_{index}')
     team_b = data.get(f'team_b_{index}')
+    matchday = data.get('matchday')
 
     available_maps = MAPS.copy()
 
@@ -36,6 +37,7 @@ def perform_veto_process(data, index):
     return {
         "team_a": team_a,
         "team_b": team_b,
+        "matchday": matchday,
         "bans": {
             "A": [ban_a1, ban_a2],
             "B": [ban_b1, ban_b2]
