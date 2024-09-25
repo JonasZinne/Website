@@ -45,12 +45,12 @@ def download_matches():
 @app.route("/export_vetos", methods=["GET", "POST"])
 def export_vetos():
     session['can_download_matches'] = False
-    veto_result = None
+    veto_results = []
     
     if request.method == "POST":       
-        veto_result = export_vetos_main(request.form)  
+        veto_results = export_vetos_main(request.form)
     
-    return render_template("export_vetos.html", maps=MAPS, teams=TEAMS, veto_result=veto_result)
+    return render_template("export_vetos.html", maps=MAPS, teams=TEAMS, veto_results=veto_results)
 
 # Turnier anlegen
 @app.route("/create_tournament", methods=["GET"])

@@ -6,89 +6,99 @@
     <section class="section">
         <h2>Vetos exportieren</h2>
         
+        <!-- Form mit 4 Vetos nebeneinander -->
         <form method="POST" action="{{ url_for('export_vetos') }}">
-            <table>
-                <!-- Team A und B Auswahl -->
-                {% for team_label, team_name in [('Team A', 'team_a'), ('Team B', 'team_b')] %}
-                    <tr>
-                        <td><label for="{{ team_name }}">{{ team_label }}:</label></td>
-                        <td>
-                            <select name="{{ team_name }}" required>
-                                <option value="" disabled selected hidden>Bitte wählen</option>
-                                {% for team in teams %}
-                                    <option value="{{ team }}">{{ team }}</option>
-                                {% endfor %}
-                            </select>
-                        </td>
-                    </tr>
-                {% endfor %}
-
-                 <!-- Ban/Pick mit Seitenwahl -->
-                {% for label, name, side_name in [('A ban', 'ban_a1', None), 
-                                                  ('B ban', 'ban_b1', None), 
-                                                  ('A pick', 'pick_a', 'side_b1'), 
-                                                  ('B pick', 'pick_b', 'side_a1'), 
-                                                  ('A ban', 'ban_a2', None), 
-                                                  ('B ban', 'ban_b2', None)] %}
-                    <tr>
-                        <td><label for="{{ name }}">{{ label }}:</label></td>
-                        <td>
-                            <select name="{{ name }}" class="map-select" required>
-                                <option value="" disabled selected hidden>Bitte wählen</option>
-                                {% for map in maps %}
-                                    <option value="{{ map }}">{{ map }}</option>
-                                {% endfor %}
-                            </select>
-                        </td>
-                    </tr>
-
-                    {% if side_name %}
+            <div class="veto-grid">
+                {% for i in range(4) %}
+                <table>
+                    <!-- Team A und B Auswahl -->
+                    {% for team_label, team_name in [('Team A', 'team_a_' ~ i), ('Team B', 'team_b_' ~ i)] %}
                         <tr>
-                            <td><label for="{{ side_name }}">Seitenwahl (Att/Def):</label></td>
+                            <td><label for="{{ team_name }}">{{ team_label }}:</label></td>
                             <td>
-                                <select name="{{ side_name }}">
+                                <select name="{{ team_name }}" required>
                                     <option value="" disabled selected hidden>Bitte wählen</option>
-                                    <option value="att">Att</option>
-                                    <option value="def">Def</option>
+                                    {% for team in teams %}
+                                        <option value="{{ team }}">{{ team }}</option>
+                                    {% endfor %}
                                 </select>
                             </td>
                         </tr>
-                    {% endif %}
-                {% endfor %}
+                    {% endfor %}
 
-                <!-- Decider -->
-                <tr>
-                    <td><label for="side_a2">A Start (Decider):</label></td>
-                    <td>
-                        <select name="side_a2">
-                            <option value="" disabled selected hidden>Bitte wählen</option>
-                            <option value="att">Att</option>
-                            <option value="def">Def</option>
-                        </select>
-                    </td>
-                </tr>
-            </table>
+                    <!-- Ban/Pick mit Seitenwahl -->
+                    {% for label, name, side_name in [('A ban', 'ban_a1_' ~ i, None), 
+                                                      ('B ban', 'ban_b1_' ~ i, None), 
+                                                      ('A pick', 'pick_a_' ~ i, 'side_b1_' ~ i), 
+                                                      ('B pick', 'pick_b_' ~ i, 'side_a1_' ~ i), 
+                                                      ('A ban', 'ban_a2_' ~ i, None), 
+                                                      ('B ban', 'ban_b2_' ~ i, None)] %}
+                        <tr>
+                            <td><label for="{{ name }}">{{ label }}:</label></td>
+                            <td>
+                                <select name="{{ name }}" class="map-select map-select-{{ i }}" required>
+                                    <option value="" disabled selected hidden>Bitte wählen</option>
+                                    {% for map in maps %}
+                                        <option value="{{ map }}">{{ map }}</option>
+                                    {% endfor %}
+                                </select>
+                            </td>
+                        </tr>
+
+                        {% if side_name %}
+                            <tr>
+                                <td><label for="{{ side_name }}">Seitenwahl (Att/Def):</label></td>
+                                <td>
+                                    <select name="{{ side_name }}">
+                                        <option value="" disabled selected hidden>Bitte wählen</option>
+                                        <option value="att">Att</option>
+                                        <option value="def">Def</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+
+                    <!-- Decider -->
+                    <tr>
+                        <td><label for="side_a2_{{ i }}">A Start (Decider):</label></td>
+                        <td>
+                            <select name="side_a2_{{ i }}">
+                                <option value="" disabled selected hidden>Bitte wählen</option>
+                                <option value="att">Att</option>
+                                <option value="def">Def</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+                {% endfor %}
+            </div>
         
             <button type="submit">Veto exportieren</button>   
         </form>
     </section>
 
-    {% if veto_result %}
+    {% if veto_results %}
         <section class="section">
-            <h2>Ergebnis</h3>
+            <h2>Ergebnis</h2>
             
-            <p>{{ veto_result.team_a }} (A) - {{ veto_result.team_b }} (B)</p>
-            <table>
-                <tr><td>A ban</td><td>{{ veto_result.bans.A[0] }}</td></tr>
-                <tr><td>B ban</td><td>{{ veto_result.bans.B[0] }}</td></tr>
-                <tr><td>A pick</td><td>{{ veto_result.picks.A }}</td></tr>
-                <tr><td>B start</td><td>{{ veto_result.sides.pick_a }}</td></tr>
-                <tr><td>B pick</td><td>{{ veto_result.picks.B }}</td></tr>
-                <tr><td>A start</td><td>{{ veto_result.sides.pick_b }}</td></tr>
-                <tr><td>A ban</td><td>{{ veto_result.bans.A[1] }}</td></tr>
-                <tr><td>B ban</td><td>{{ veto_result.bans.B[1] }}</td></tr>
-                <tr><td>A start</td><td>{{ veto_result.sides.decider }} ({{ veto_result.decider }})</td></tr>
-            </table>
+            {% for result in veto_results %}
+                <div class="veto-result">
+                    <h3>{{ result.team_a }} (A) - {{ result.team_b }} (B)</h3>
+                    <table>
+                        <tr><td>A ban</td><td>{{ result.bans.A[0] }}</td></tr>
+                        <tr><td>B ban</td><td>{{ result.bans.B[0] }}</td></tr>
+                        <tr><td>A pick</td><td>{{ result.picks.A }}</td></tr>
+                        <tr><td>B start</td><td>{{ result.sides.pick_a }}</td></tr>
+                        <tr><td>B pick</td><td>{{ result.picks.B }}</td></tr>
+                        <tr><td>A start</td><td>{{ result.sides.pick_b }}</td></tr>
+                        <tr><td>A ban</td><td>{{ result.bans.A[1] }}</td></tr>
+                        <tr><td>B ban</td><td>{{ result.bans.B[1] }}</td></tr>
+                        <tr><td>A start</td><td>{{ result.sides.decider }} ({{ result.decider }})</td></tr>
+                    </table>
+                </div>
+                <hr>
+            {% endfor %}
         </section>
     {% endif %}
 
@@ -96,29 +106,39 @@
         <a href="{{ url_for('index') }}" class="button">Zurück zur Startseite</a>
     </section>
 
-    <!-- JavaScript zur Verwaltung der Dropdown-Optionen -->
+    <!-- JavaScript zur Verwaltung der Dropdown-Optionen pro Veto -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const mapSelects = document.querySelectorAll('.map-select');
+            for (let i = 0; i < 4; i++) {
+                const mapSelects = document.querySelectorAll('.map-select-' + i);
 
-            function updateSelectOptions() {
-                const selectedMaps = Array.from(mapSelects)
-                    .map(select => select.value)
-                    .filter(value => value);
-    
-                mapSelects.forEach(select => {
-                    const currentValue = select.value;
-                    Array.from(select.options).forEach(option => {
-                        option.disabled = selectedMaps.includes(option.value) && option.value !== currentValue;
+                function updateSelectOptions() {
+                    const selectedMaps = Array.from(mapSelects)
+                        .map(select => select.value)
+                        .filter(value => value);
+        
+                    mapSelects.forEach(select => {
+                        const currentValue = select.value;
+                        Array.from(select.options).forEach(option => {
+                            option.disabled = selectedMaps.includes(option.value) && option.value !== currentValue;
+                        });
                     });
+                }
+        
+                mapSelects.forEach(select => {
+                    select.addEventListener('change', updateSelectOptions);
                 });
+        
+                updateSelectOptions();
             }
-    
-            mapSelects.forEach(select => {
-                select.addEventListener('change', updateSelectOptions);
-            });
-    
-            updateSelectOptions();
         });
     </script>    
+
+    <style>
+        .veto-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+    </style>
 {% endblock %}
