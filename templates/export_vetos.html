@@ -86,27 +86,24 @@
     
         <button id="copyButton">Kopieren</button>
         
-        <div id="vetoResults">
-            <p># Matchday: {{ veto_results[0].matchday }}</p>
-    
+        <textarea id="vetoResultsTextarea" style="display:none;">
+            # Matchday: {{ veto_results[0].matchday }}
             {% for result in veto_results %}
-                <div class="veto-result">
-                    <p>```<br>{{ result.team_a }} (A) - {{ result.team_b }} (B)</p>
-                    <table>
-                        <tr><td>A ban</td><td>{{ result.bans.A[0] }}</td></tr>
-                        <tr><td>B ban</td><td>{{ result.bans.B[0] }}</td></tr>
-                        <tr><td>A pick</td><td>{{ result.picks.A }}</td></tr>
-                        <tr><td>B start</td><td>{{ result.sides.pick_a }}</td></tr>
-                        <tr><td>B pick</td><td>{{ result.picks.B }}</td></tr>
-                        <tr><td>A start</td><td>{{ result.sides.pick_b }}</td></tr>
-                        <tr><td>A ban</td><td>{{ result.bans.A[1] }}</td></tr>
-                        <tr><td>B ban</td><td>{{ result.bans.B[1] }}</td></tr>
-                        <tr><td>A start</td><td>{{ result.sides.decider }} ({{ result.decider }})</td></tr>
-                    </table>
-                    <spap>```</span>
-                </div>
+            ```
+            {{ result.team_a }} (A) - {{ result.team_b }} (B)
+            &#8203;
+            A ban:   {{ result.bans.A[0] }}
+            B ban:   {{ result.bans.B[0] }}
+            A pick:  {{ result.picks.A }}
+            B start: {{ result.sides.pick_a }}
+            B pick:  {{ result.picks.B }}
+            A start: {{ result.sides.pick_b }}
+            A ban:   {{ result.bans.A[1] }}
+            B ban:   {{ result.bans.B[1] }}
+            A start: {{ result.sides.decider }} ({{ result.decider }})
+            ```
             {% endfor %}
-        </div>
+        </textarea>
     </section>
     {% endif %}
 
@@ -117,9 +114,20 @@
     <!-- JavaScript zur Verwaltung der Dropdown-Optionen pro Veto -->
     <script>
         function copyToClipboard() {
+            const textarea = document.getElementById("vetoResultsTextarea");
             
+            let text = textarea.value.split('\n')
+                .map(line => line.trim())
+                .filter(line => line.length > 0) 
+                .join('\n');
+
+            navigator.clipboard.writeText(text)
+                .catch(err => {
+                    alert('Fehler beim Kopieren: ' + err);
+                    console.error('Fehler beim Kopieren:', err);
+                });
         }
-    
+
         document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('copyButton').addEventListener('click', copyToClipboard);
 
@@ -170,7 +178,7 @@
             updateTeamSelectOptions();
             updateMapSelectOptions();
         });
-    </script>    
+    </script>
 
     <style>
         .veto-grid {
