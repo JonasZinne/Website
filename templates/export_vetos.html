@@ -16,7 +16,7 @@
                         <tr>
                             <td><label for="{{ team_name }}">{{ team_label }}:</label></td>
                             <td>
-                                <select name="{{ team_name }}" required>
+                                <select name="{{ team_name }}" class="team-select" required>
                                     <option value="" disabled selected hidden>Bitte wählen</option>
                                     {% for team in teams %}
                                         <option value="{{ team }}">{{ team }}</option>
@@ -109,10 +109,26 @@
     <!-- JavaScript zur Verwaltung der Dropdown-Optionen pro Veto -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            for (let i = 0; i < 4; i++) {
-                const mapSelects = document.querySelectorAll('.map-select-' + i);
+            const teamSelects = document.querySelectorAll('.team-select');
+            const mapSelects = document.querySelectorAll('.map-select');
 
-                function updateSelectOptions() {
+            function updateTeamSelectOptions() {
+                const selectedTeams = Array.from(teamSelects)
+                    .map(select => select.value)
+                    .filter(value => value);
+                
+                teamSelects.forEach(select => {
+                    const currentValue = select.value;
+                    Array.from(select.options).forEach(option => {
+                        option.disabled = selectedTeams.includes(option.value) && option.value !== currentValue;
+                    });
+                });
+            }
+
+            function updateMapSelectOptions() {
+                for (let i = 0; i < 4; i++) {
+                    const mapSelects = document.querySelectorAll('.map-select-' + i);
+
                     const selectedMaps = Array.from(mapSelects)
                         .map(select => select.value)
                         .filter(value => value);
@@ -124,13 +140,21 @@
                         });
                     });
                 }
-        
-                mapSelects.forEach(select => {
-                    select.addEventListener('change', updateSelectOptions);
-                });
-        
-                updateSelectOptions();
             }
+
+            teamSelects.forEach(select => {
+                select.addEventListener('change', function() {
+                    updateTeamSelectOptions();
+                    updateMapSelectOptions();
+                });
+            });
+
+            mapSelects.forEach(select => {
+                select.addEventListener('change', updateMapSelectOptions);
+            });
+
+            updateTeamSelectOptions();
+            updateMapSelectOptions();
         });
     </script>    
 
