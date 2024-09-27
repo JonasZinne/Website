@@ -7,13 +7,26 @@
         <h2>Vetos exportieren</h2>
         
         <form method="POST" action="{{ url_for('export_vetos') }}">
-            <label for="matchday">Matchday: </label>
-            <input type="number" id="matchday" name="matchday" min="1" max="10" required>
-
             <div class="veto-grid">
                 {% for i in range(4) %}
                 <table>
-                    <!-- Team A und B Auswahl -->
+                    <!-- Matchday -->
+                    {% if i == 0 %}
+                        <tr>
+                            <td><strong><label for="matchday">Matchday:</label></strong></td>
+                            <td>
+                                <input type="number" name="matchday" id="matchday" class="number-input" min="1" max="10" required>
+                            </td>
+                        </tr>
+
+                    {% else %}
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                    {% endif %}
+
+                    <!-- Auswahl Team A und B  -->
                     {% for team_label, team_name in [('Team A', 'team_a_' ~ i), ('Team B', 'team_b_' ~ i)] %}
                         <tr>
                             <td><label for="{{ team_name }}">{{ team_label }}:</label></td>
@@ -49,7 +62,7 @@
 
                         {% if side_name %}
                             <tr>
-                                <td><label for="{{ side_name }}">Seitenwahl (Att/Def):</label></td>
+                                <td><label for="{{ side_name }}">Seite (Att/Def):</label></td>
                                 <td>
                                     <select name="{{ side_name }}">
                                         <option value="" disabled selected hidden>Bitte wählen</option>
@@ -63,7 +76,7 @@
 
                     <!-- Decider -->
                     <tr>
-                        <td><label for="side_a2_{{ i }}">A Start (Decider):</label></td>
+                        <td><label for="side_a2_{{ i }}">Decider (Att/Def):</label></td>
                         <td>
                             <select name="side_a2_{{ i }}">
                                 <option value="" disabled selected hidden>Bitte wählen</option>
@@ -76,115 +89,34 @@
                 {% endfor %}
             </div>
         
-            <button type="submit">Exportieren</button>   
+            <button type="submit" style="margin-top: 10px;">Exportieren</button>   
         </form>
     </section>
 
     {% if veto_results %}
-    <section class="section">
-        <h2>Ergebnis</h2>
-    
-        <button id="copyButton">Kopieren</button>
+        <section class="section">
+            <h2>Ergebnis</h2>
         
-        <textarea id="vetoResultsTextarea" style="display:none;">
-            # Matchday: {{ veto_results[0].matchday }}
-            {% for result in veto_results %}
-            ```
-            {{ result.team_a }} (A) - {{ result.team_b }} (B)
-            &#8203;
-            A ban:   {{ result.bans.A[0] }}
-            B ban:   {{ result.bans.B[0] }}
-            A pick:  {{ result.picks.A }}
-            B start: {{ result.sides.pick_a }}
-            B pick:  {{ result.picks.B }}
-            A start: {{ result.sides.pick_b }}
-            A ban:   {{ result.bans.A[1] }}
-            B ban:   {{ result.bans.B[1] }}
-            A start: {{ result.sides.decider }} ({{ result.decider }})
-            ```
-            {% endfor %}
-        </textarea>
-    </section>
-    {% endif %}
-
-    <section class="section">
-        <a href="{{ url_for('index') }}" class="button">Zurück zur Startseite</a>
-    </section>
-
-    <!-- JavaScript zur Verwaltung der Dropdown-Optionen pro Veto -->
-    <script>
-        function copyToClipboard() {
-            const textarea = document.getElementById("vetoResultsTextarea");
+            <button id="copyButton">Kopieren</button>
             
-            let text = textarea.value.split('\n')
-                .map(line => line.trim())
-                .filter(line => line.length > 0) 
-                .join('\n');
-
-            navigator.clipboard.writeText(text)
-                .catch(err => {
-                    alert('Fehler beim Kopieren: ' + err);
-                    console.error('Fehler beim Kopieren:', err);
-                });
-        }
-
-        document.addEventListener('DOMContentLoaded', function () {
-            document.getElementById('copyButton').addEventListener('click', copyToClipboard);
-
-            const teamSelects = document.querySelectorAll('.team-select');
-            const mapSelects = document.querySelectorAll('.map-select');
-
-            function updateTeamSelectOptions() {
-                const selectedTeams = Array.from(teamSelects)
-                    .map(select => select.value)
-                    .filter(value => value);
-                
-                teamSelects.forEach(select => {
-                    const currentValue = select.value;
-                    Array.from(select.options).forEach(option => {
-                        option.disabled = selectedTeams.includes(option.value) && option.value !== currentValue;
-                    });
-                });
-            }
-
-            function updateMapSelectOptions() {
-                for (let i = 0; i < 4; i++) {
-                    const mapSelects = document.querySelectorAll('.map-select-' + i);
-
-                    const selectedMaps = Array.from(mapSelects)
-                        .map(select => select.value)
-                        .filter(value => value);
-        
-                    mapSelects.forEach(select => {
-                        const currentValue = select.value;
-                        Array.from(select.options).forEach(option => {
-                            option.disabled = selectedMaps.includes(option.value) && option.value !== currentValue;
-                        });
-                    });
-                }
-            }
-
-            teamSelects.forEach(select => {
-                select.addEventListener('change', function() {
-                    updateTeamSelectOptions();
-                    updateMapSelectOptions();
-                });
-            });
-
-            mapSelects.forEach(select => {
-                select.addEventListener('change', updateMapSelectOptions);
-            });
-
-            updateTeamSelectOptions();
-            updateMapSelectOptions();
-        });
-    </script>
-
-    <style>
-        .veto-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-        }
-    </style>
+            <textarea id="vetoResultsTextarea" style="display:none;">
+                # Matchday: {{ veto_results[0].matchday }}
+                {% for result in veto_results %}
+                ```
+                {{ result.team_a }} (A) - {{ result.team_b }} (B)
+                &#8203;
+                A ban:   {{ result.bans.A[0] }}
+                B ban:   {{ result.bans.B[0] }}
+                A pick:  {{ result.picks.A }}
+                B start: {{ result.sides.pick_a }}
+                B pick:  {{ result.picks.B }}
+                A start: {{ result.sides.pick_b }}
+                A ban:   {{ result.bans.A[1] }}
+                B ban:   {{ result.bans.B[1] }}
+                A start: {{ result.sides.decider }} ({{ result.decider }})
+                ```
+                {% endfor %}
+            </textarea>
+        </section>
+    {% endif %}
 {% endblock %}

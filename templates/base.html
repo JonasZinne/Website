@@ -17,6 +17,12 @@
 
     <main>
         {% block content %}{% endblock %}
+
+        {% if request.endpoint != 'index' %}
+            <section class="section">
+                <a href="{{ url_for('index') }}" class="button">Zurück zur Startseite</a>
+            </section>
+        {% endif %}
     </main>
 
     <footer>

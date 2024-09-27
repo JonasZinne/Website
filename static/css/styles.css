@@ -5,6 +5,7 @@ body {
     padding: 0;
     background-color: #ccf2f4;
     line-height: 1.6;
+    color: #333;
 }
 
 /* Header */
@@ -33,11 +34,25 @@ header h1 {
     font-size: 2.2em;
 }
 
+/* Footer */
+footer {
+    background-color: #1f1f1f;
+    color: white;
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    font-size: 14px;
+    border-top: 5px solid #03a9f4;
+    height: 50px;
+}
+
 /* Main */
 main {
     padding: 30px;
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
+    padding-bottom: 50px;
 }
 
 /* Section */
@@ -51,7 +66,6 @@ main {
 .section h2 {
     margin-top: 0;
     font-size: 1.8em;
-    color: #333;
 }
 
 /* Dashboard */
@@ -60,26 +74,47 @@ main {
     gap: 20px;
 }
 
-/* Input */
-.url-input {
-    width: 100%;
-    max-width: 600px;
-    padding: 12px;
+/* Input & Select */
+input, select {
+    width: 100%; 
+    font-size: 16px;
     border: 2px solid #1f1f1f;
     border-radius: 8px;
-    font-size: 16px;
     transition: border-color 0.3s ease;
+    outline: none;
+}
+
+.url-input {
+    max-width: 600px;
+    padding: 12px;
     margin-right: 10px;
 }
 
-.url-input:focus {
-    border-color: #03a9f4;
+.number-input {
+    max-width: 50px;
+    padding: 5px;
+}
+
+select {
+    max-width: 150px;
+    padding: 5px;
+}
+
+input:focus, select:focus{
+    border-color: #4a90e2;
     outline: none;
+}
+
+/* Grid */
+.veto-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 20px;
 }
 
 /* Button */
 button, .button {
-    background-color: #03a9f4;
+    background-color: #4a90e2;
     color: white;
     padding: 12px 25px;
     border: none;
@@ -89,11 +124,10 @@ button, .button {
     text-decoration: none;
     display: inline-block;
     transition: background-color 0.3s ease, transform 0.2s ease;
-    margin-right: 10px;
 }
 
 button:hover, .button:hover {
-    background-color: #0288d1;
+    background-color: #357ab8;
 }
 
 button:active, .button:active {
@@ -118,7 +152,6 @@ button:active, .button:active {
 
 #loadingIndicator p {
     font-size: 1.5em;
-    color: #333;
     margin-top: 10px;
 }
 
@@ -139,17 +172,4 @@ button:active, .button:active {
     100% {
         transform: rotate(360deg);
     }
-}
-
-/* Footer */
-footer {
-    background-color: #1f1f1f;
-    color: white;
-    text-align: center;
-    padding: 10px;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-    font-size: 14px;
-    border-top: 5px solid #03a9f4;
 }
