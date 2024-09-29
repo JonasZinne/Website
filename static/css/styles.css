@@ -91,7 +91,7 @@ input, select {
 }
 
 .number-input {
-    max-width: 50px;
+    max-width: 35px;
     padding: 5px;
 }
 
@@ -135,6 +135,12 @@ input:focus, select:focus{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
     gap: 20px;
+}
+
+.veto-grid > table {
+    border: 2px solid #ccf2f4;
+    border-radius: 8px;
+    padding: 5px; 
 }
 
 /* Button */

@@ -21,23 +21,21 @@
         </div>
         
         <form method="POST" action="/export_vetos?division={{ division }}">
+            <table style="margin-bottom: 20px;">
+                <tr>
+                    <td><strong><label for="matchday">Matchday:</label></strong></td>
+                    <td>
+                        <input type="number" name="matchday" id="matchday" class="number-input" min="1" max="10" required>
+                    </td>
+                </tr>
+            </table>
+
             <div class="veto-grid">
-                {% for i in range(num_matches) %}
+                {% for i in range(num_matches) %}                
                 <table>
-                    <!-- Matchday -->
-                    {% if i == 0 %}
-                        <tr>
-                            <td><strong><label for="matchday">Matchday:</label></strong></td>
-                            <td>
-                                <input type="number" name="matchday" id="matchday" class="number-input" min="1" max="10" required>
-                            </td>
-                        </tr>
-                    {% else %}
-                        <tr>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                        </tr>
-                    {% endif %}
+                    <tr>
+                        <td colspan="2" style="text-align: center; padding-bottom: 10px;"><strong>Match {{ i + 1 }}</strong></td>
+                    </tr>
 
                     <!-- Auswahl Team A und B  -->
                     {% for team_label, team_name in [('Team A', 'team_a_' ~ i), ('Team B', 'team_b_' ~ i)] %}
