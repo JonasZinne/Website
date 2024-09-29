@@ -105,6 +105,31 @@ input:focus, select:focus{
     outline: none;
 }
 
+/* Radio Button */
+.radio-label {
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.radio-label input[type="radio"] {
+    opacity: 0;
+    position: absolute;
+}
+
+.radio-custom {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #1f1f1f;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.radio-label input[type="radio"]:checked + .radio-custom {
+    background-color: #4a90e2;
+}
+
 /* Grid */
 .veto-grid {
     display: grid;

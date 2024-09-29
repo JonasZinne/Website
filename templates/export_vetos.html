@@ -7,12 +7,16 @@
         <h2>Vetos exportieren</h2>
         
         <!-- Auswahl Divison -->
-        <div>
-            <label>
-                <input type="radio" name="division" value="1" onclick="updateURLParameter('division', '1')" {% if division == '1' %}checked{% endif %}> Division 1
+        <div style="margin-bottom: 10px;">
+            <label class="radio-label">
+                <input type="radio" name="division" value="1" onclick="updateURLParameter('division', '1')" {% if division == '1' %}checked{% endif %}>
+                <span class="radio-custom"></span>
+                Division 1
             </label>
-            <label>
-                <input type="radio" name="division" value="2" onclick="updateURLParameter('division', '2')" {% if division == '2' %}checked{% endif %}> Division 2
+            <label class="radio-label">
+                <input type="radio" name="division" value="2" onclick="updateURLParameter('division', '2')" {% if division == '2' %}checked{% endif %}>
+                <span class="radio-custom"></span>
+                Division 2
             </label>
         </div>
         
