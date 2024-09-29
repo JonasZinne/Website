@@ -6,12 +6,12 @@
     
     <title>{% block title %}Default Title{% endblock %}</title>
 
-    <link rel="icon" href="{{ url_for('static', filename='images/favicon.png') }}" type="image/png">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="icon" href="/static/images/favicon.png" type="image/png">
+    <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
     <header>
-        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Project V Logo">
+        <img src="/static/images/logo.png" alt="Project V Logo">
         <h1>PROJECT V</h1>
     </header>
 
@@ -20,7 +20,7 @@
 
         {% if request.endpoint != 'index' %}
             <section class="section">
-                <a href="{{ url_for('index') }}" class="button">Zurück zur Startseite</a>
+                <a href="/" class="button">Zurück zur Startseite</a>
             </section>
         {% endif %}
     </main>
@@ -29,6 +29,6 @@
         <p>&copy; Jonas Zinnecker. Alle Rechte vorbehalten.</p>
     </footer>
 
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="/static/js/main.js"></script>
 </body>
 </html>
