@@ -1,6 +1,6 @@
 MAPS = ["Abyss", "Ascent", "Bind", "Haven", "Icebox", "Lotus", "Sunset"]
 TEAMS_DIV1 = ["ATN", "FOKUS", "PXU", "RZN", "Scald", "SK", "SSP", "TOG"]
-TEAMS_DIV2 = ["Team1", "Team2", "Team3", "Team4", "Team5", "Team6", "Team7", "Team8", "Team9", "Team10"]
+TEAMS_DIV2 = ["Veni", "Lvengers", "Teamhoppers", "ROA", "Seals", "RV", "Entropy", "NB", "BS", "DoeS"]
 
 def choose_side(side_choice):
     return "Att" if side_choice == 'att' else "Def"
@@ -55,10 +55,10 @@ def perform_veto_process(data, index):
         "decider": decider
     }
 
-def main(data=None):
+def main(data=None, num_matches=4):
     if data:
         results = []
-        for i in range(4):
+        for i in range(num_matches):
             result = perform_veto_process(data, i)
             results.append(result)
         return results

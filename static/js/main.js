@@ -1,9 +1,9 @@
 // loading indicator
-document.querySelector("form").addEventListener("submit", function() {
+document.querySelector("form")?.addEventListener("submit", function() {
     document.getElementById("loadingIndicator").style.display = "flex";
 });
 
-// export matches
+// copy to clipboard
 function copyToClipboard() {
     const textarea = document.getElementById("vetoResultsTextarea");
     
@@ -18,9 +18,19 @@ function copyToClipboard() {
         });
 }
 
+// export vetos
 document.addEventListener('DOMContentLoaded', function () {
     const teamSelects = document.querySelectorAll('.team-select');
     const mapSelects = document.querySelectorAll('.map-select');
+    const divisionRadios = document.querySelectorAll('input[name="division"]');
+
+    const numMatches = document.querySelectorAll('.veto-grid table').length;
+
+    function updateURLParameter(param, value) {
+        const url = new URL(window.location);
+        url.searchParams.set(param, value);
+        window.location.href = url;
+    }
 
     function updateTeamSelectOptions() {
         const selectedTeams = Array.from(teamSelects)
@@ -36,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function updateMapSelectOptions() {
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < numMatches; i++) {
             const mapSelects = document.querySelectorAll('.map-select-' + i);
 
             const selectedMaps = Array.from(mapSelects)
@@ -51,6 +61,12 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
     }
+
+    divisionRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
+            updateURLParameter('division', this.value);
+        });
+    });
 
     teamSelects.forEach(select => {
         select.addEventListener('change', function() {
