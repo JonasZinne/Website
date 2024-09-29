@@ -1,6 +1,6 @@
 MAPS = ["Abyss", "Ascent", "Bind", "Haven", "Icebox", "Lotus", "Sunset"]
 TEAMS_DIV1 = ["ATN", "FOKUS", "PXU", "RZN", "Scald", "SK", "SSP", "TOG"]
-TEAMS_DIV2 = ["Veni", "Lvengers", "Teamhoppers", "ROA", "Seals", "RV", "Entropy", "NB", "BS", "DoeS"]
+TEAMS_DIV2 = ["BS", "DoeS", "Entropy", "Lvengers", "NB", "ROA", "RV", "Seals", "Teamhoppers", "Veni"]
 
 def choose_side(side_choice):
     return "Att" if side_choice == 'att' else "Def"

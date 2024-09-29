@@ -16,7 +16,7 @@
             </label>
         </div>
         
-        <form method="POST" action="{{ url_for('export_vetos') }}">
+        <form method="POST" action="/export_vetos?division={{ division }}">
             <div class="veto-grid">
                 {% for i in range(num_matches) %}
                 <table>
@@ -114,15 +114,15 @@
                 ```
                 {{ result.team_a }} (A) - {{ result.team_b }} (B)
                 &#8203;
-                A ban:   {{ result.bans.A[0] }}
-                B ban:   {{ result.bans.B[0] }}
-                A pick:  {{ result.picks.A }}
-                B start: {{ result.sides.pick_a }}
-                B pick:  {{ result.picks.B }}
-                A start: {{ result.sides.pick_b }}
-                A ban:   {{ result.bans.A[1] }}
-                B ban:   {{ result.bans.B[1] }}
-                A start: {{ result.sides.decider }} ({{ result.decider }})
+                A ban   {{ result.bans.A[0] }}
+                B ban   {{ result.bans.B[0] }}
+                A pick  {{ result.picks.A }}
+                B start {{ result.sides.pick_a }}
+                B pick  {{ result.picks.B }}
+                A start {{ result.sides.pick_b }}
+                A ban   {{ result.bans.A[1] }}
+                B ban   {{ result.bans.B[1] }}
+                A start {{ result.sides.decider }} ({{ result.decider }})
                 ```
                 {% endfor %}
             </textarea>
