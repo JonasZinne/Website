@@ -9,42 +9,11 @@ app.secret_key = os.urandom(24)
 # Dashboard (Index)
 @app.route("/", methods=["GET"])
 def index():
-    session['can_download_matches'] = False
     return render_template("index.html")
-
-# Export Matches
-@app.route("/export_matches", methods=["GET", "POST"])
-def export_matches():
-    session['can_download_matches'] = True
-    message = None
-    file_path = None
-    
-    if request.method == "POST":
-        url = request.form.get('url')
-        
-        message, file_path = export_matches_main(url)      
-        session['message'] = message
-        session['file_path'] = file_path
-    
-    return render_template("export_matches.html", message=message, file_ready=(file_path is not None))
-
-# Download der Datei
-@app.route("/download_matches")
-def download_matches():
-    if not session.get('can_download_matches'):
-        return render_template("error.html", error_code=403, error_message="Download nicht verfügbar"), 403
-    
-    file_path = session.get('file_path')
-    
-    if file_path and os.path.exists(file_path):
-        return send_file(file_path, as_attachment=True)
-    else:
-        return render_template("error.html", error_code=404, error_message="Datei nicht gefunden"), 404
 
 # Export Vetos
 @app.route("/export_vetos", methods=["GET", "POST"])
 def export_vetos():
-    session['can_download_matches'] = False
     veto_results = []
 
     division = request.args.get('division', '1')
@@ -56,10 +25,34 @@ def export_vetos():
 
     return render_template("export_vetos.html", maps=MAPS, teams=teams, veto_results=veto_results, division=division, num_matches=num_matches)
 
+# Export Matches
+@app.route("/export_matches", methods=["GET", "POST"])
+def export_matches():
+    if request.method == "POST":
+        url = request.form['url']
+        excel_file = export_matches_main(url)
+        session['excel_file'] = excel_file
+        session['file_exported'] = True
+
+    file_exported = session.get('file_exported', False)
+    return render_template("export_matches.html", file_exported=file_exported)
+    
+@app.route("/download_matches")
+def download_matches():
+    if not session.get('file_exported'):
+        return render_template("error.html", error_code=403, error_message="Download nicht verfügbar"), 403
+    
+    file_path = session.get('excel_file')
+    
+    if file_path and os.path.exists(file_path):
+        session.pop('file_exported', None)
+        return send_file(file_path, as_attachment=True)
+    else:
+        return render_template("error.html", error_code=404, error_message="Datei nicht gefunden"), 404
+
 # Turnier anlegen
 @app.route("/create_tournament", methods=["GET"])
 def create_tournament():
-    session['can_download_matches'] = False
     return render_template("create_tournament.html")
 
 if __name__ == "__main__":

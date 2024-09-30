@@ -19,17 +19,13 @@
             <div class="spinner"></div>
             <p>Laden...</p>
         </div>
+
+        {% if file_exported %}
+            <script>
+                window.onload = function() {
+                    window.location.href = "/download_matches";
+                };
+            </script>
+        {% endif %}
     </section>
-
-    {% if message %}
-        <section class="section">
-            <h2>Ergebnis</h2>
-            
-            <p>{{ message }}</p>
-
-            {% if file_ready %}
-                <a href="/download_matches" class="button">Download Excel</a>
-            {% endif %}
-        </section>
-    {% endif %}
 {% endblock %}
