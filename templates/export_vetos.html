@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+
+{% block title %}Export Vetos{% endblock %}
+
+{% block content %}
+    <section class="section">
+        <h2>Vetos exportieren</h2>
+        
+        <!-- Auswahl Divison -->
+        <div style="margin-bottom: 10px;">
+            <label class="radio-label">
+                <input type="radio" name="division" value="1" {% if division == '1' %}checked{% endif %} onchange="this.form.submit();">
+                <span class="radio-custom"></span>
+                Division 1
+            </label>
+            <label class="radio-label">
+                <input type="radio" name="division" value="2" {% if division == '2' %}checked{% endif %} onchange="this.form.submit();">
+                <span class="radio-custom"></span>
+                Division 2
+            </label>
+        </div>
+        
+        <form method="POST" action="/export_vetos?division={{ division }}">
+            <table style="margin-bottom: 20px;">
+                <tr>
+                    <td><strong><label for="matchday">Matchday:</label></strong></td>
+                    <td>
+                        <input type="number" name="matchday" id="matchday" class="number-input" min="1" max="10" required>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="veto-grid">
+                {% for i in range(num_matches) %}                
+                <table>
+                    <tr>
+                        <td colspan="2" style="text-align: center; padding-bottom: 10px;"><strong>Match {{ i + 1 }}</strong></td>
+                    </tr>
+
+                    <!-- Auswahl Team A und B  -->
+                    {% for team_label, team_name in [('Team A', 'team_a_' ~ i), ('Team B', 'team_b_' ~ i)] %}
+                        <tr>
+                            <td><label for="{{ team_name }}">{{ team_label }}:</label></td>
+                            <td>
+                                <select name="{{ team_name }}" class="team-select" required>
+                                    <option value="" disabled selected hidden>Bitte wählen</option>
+                                    {% for team in teams %}
+                                        <option value="{{ team }}">{{ team }}</option>
+                                    {% endfor %}
+                                </select>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                    <!-- Ban/Pick mit Seitenwahl -->
+                    {% for label, name, side_name in [('A ban', 'ban_a1_' ~ i, None), 
+                                                      ('B ban', 'ban_b1_' ~ i, None), 
+                                                      ('A pick', 'pick_a_' ~ i, 'side_b1_' ~ i), 
+                                                      ('B pick', 'pick_b_' ~ i, 'side_a1_' ~ i), 
+                                                      ('A ban', 'ban_a2_' ~ i, None), 
+                                                      ('B ban', 'ban_b2_' ~ i, None)] %}
+                        <tr>
+                            <td><label for="{{ name }}">{{ label }}:</label></td>
+                            <td>
+                                <select name="{{ name }}" class="map-select map-select-{{ i }}" required>
+                                    <option value="" disabled selected hidden>Bitte wählen</option>
+                                    {% for map in maps %}
+                                        <option value="{{ map }}">{{ map }}</option>
+                                    {% endfor %}
+                                </select>
+                            </td>
+                        </tr>
+
+                        {% if side_name %}
+                            <tr>
+                                <td><label for="{{ side_name }}">Seite (Att/Def):</label></td>
+                                <td>
+                                    <select name="{{ side_name }}">
+                                        <option value="" disabled selected hidden>Bitte wählen</option>
+                                        <option value="att">Att</option>
+                                        <option value="def">Def</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+
+                    <!-- Decider -->
+                    <tr>
+                        <td><label for="side_a2_{{ i }}">Decider (Att/Def):</label></td>
+                        <td>
+                            <select name="side_a2_{{ i }}">
+                                <option value="" disabled selected hidden>Bitte wählen</option>
+                                <option value="att">Att</option>
+                                <option value="def">Def</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+                {% endfor %}
+            </div>
+        
+            <button type="submit" style="margin-top: 20px;">Exportieren</button>
+        </form>
+    </section>
+
+    <div id="customAlert" class="alert"></div>
+
+    {% if veto_results %}
+        <textarea id="vetoResultsTextarea" style="display:none;">
+            # Matchday {{ veto_results[0].matchday }}
+            {% for result in veto_results %}
+            ```
+            {{ result.team_a }} (A) - {{ result.team_b }} (B)
+            &#8203;
+            A ban   {{ result.bans.A[0] }}
+            B ban   {{ result.bans.B[0] }}
+            A pick  {{ result.picks.A }}
+            B start {{ result.sides.pick_a }}
+            B pick  {{ result.picks.B }}
+            A start {{ result.sides.pick_b }}
+            A ban   {{ result.bans.A[1] }}
+            B ban   {{ result.bans.B[1] }}
+            A start {{ result.sides.decider }} ({{ result.decider }})
+            ```
+            {% endfor %}
+        </textarea>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                copyToClipboard();
+            });
+        </script>
+    {% endif %}
+{% endblock %}

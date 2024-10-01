@@ -5,7 +5,8 @@
 {% block content %}
     <section class="section">
         <h2>Matches exportieren</h2>
-        <form method="POST" action="{{ url_for('export_matches') }}">
+
+        <form method="POST" action="/export_matches">
             <input 
                 type="url" name="url" class="url-input" autocomplete="off" 
                 placeholder="URL der 'Matches' Seite" 
@@ -18,20 +19,13 @@
             <div class="spinner"></div>
             <p>Laden...</p>
         </div>
-    </section>
 
-    {% if message %}
-        <section class="section">
-            <h2>Ergebnis</h2>
-            <p>{{ message }}</p>
-
-            {% if file_ready %}
-                <a href="{{ url_for('download_matches') }}" class="button">Download Excel</a>
-            {% endif %}
-        </section>
-    {% endif %}
-
-    <section class="section">
-        <a href="{{ url_for('index') }}" class="button">Zurück zur Startseite</a>
+        {% if file_exported %}
+            <script>
+                window.onload = function() {
+                    window.location.href = "/download_matches";
+                };
+            </script>
+        {% endif %}
     </section>
 {% endblock %}
