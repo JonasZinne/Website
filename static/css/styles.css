@@ -100,7 +100,7 @@ select {
     padding: 5px;
 }
 
-input:focus, select:focus{
+input:focus, select:focus {
     border-color: #4a90e2;
     outline: none;
 }
@@ -124,6 +124,7 @@ input:focus, select:focus{
     border: 2px solid #1f1f1f;
     border-radius: 50%;
     margin-right: 5px;
+    transition: background-color 0.3s ease;
 }
 
 .radio-label input[type="radio"]:checked + .radio-custom {
@@ -200,7 +201,6 @@ button:active, .button:active {
     height: 100%;
     background-color: rgba(255, 255, 255, 0.8);
     z-index: 1000;
-    font-family: Arial, sans-serif;
 }
 
 #loadingIndicator p {
