@@ -13,6 +13,9 @@ function copyToClipboard() {
         .join('\n');
 
     navigator.clipboard.writeText(text)
+        .then(() => {
+            alert('Ergebnis wurde erfolgreich in die Zwischenablage kopiert.');
+        })
         .catch(err => {
             alert('Fehler beim Kopieren: ' + err);
         });
@@ -81,6 +84,4 @@ document.addEventListener('DOMContentLoaded', function () {
 
     updateTeamSelectOptions();
     updateMapSelectOptions();
-
-    document.getElementById('copyButton')?.addEventListener('click', copyToClipboard);
 });

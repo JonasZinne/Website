@@ -105,29 +105,29 @@
     </section>
 
     {% if veto_results %}
-        <section class="section">
-            <h2>Ergebnis</h2>
-        
-            <button id="copyButton">Kopieren</button>
-            
-            <textarea id="vetoResultsTextarea" style="display:none;">
-                # Matchday {{ veto_results[0].matchday }}
-                {% for result in veto_results %}
-                ```
-                {{ result.team_a }} (A) - {{ result.team_b }} (B)
-                &#8203;
-                A ban   {{ result.bans.A[0] }}
-                B ban   {{ result.bans.B[0] }}
-                A pick  {{ result.picks.A }}
-                B start {{ result.sides.pick_a }}
-                B pick  {{ result.picks.B }}
-                A start {{ result.sides.pick_b }}
-                A ban   {{ result.bans.A[1] }}
-                B ban   {{ result.bans.B[1] }}
-                A start {{ result.sides.decider }} ({{ result.decider }})
-                ```
-                {% endfor %}
-            </textarea>
-        </section>
+        <textarea id="vetoResultsTextarea" style="display:none;">
+            # Matchday {{ veto_results[0].matchday }}
+            {% for result in veto_results %}
+            ```
+            {{ result.team_a }} (A) - {{ result.team_b }} (B)
+            &#8203;
+            A ban   {{ result.bans.A[0] }}
+            B ban   {{ result.bans.B[0] }}
+            A pick  {{ result.picks.A }}
+            B start {{ result.sides.pick_a }}
+            B pick  {{ result.picks.B }}
+            A start {{ result.sides.pick_b }}
+            A ban   {{ result.bans.A[1] }}
+            B ban   {{ result.bans.B[1] }}
+            A start {{ result.sides.decider }} ({{ result.decider }})
+            ```
+            {% endfor %}
+        </textarea>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                copyToClipboard();
+            });
+        </script>
     {% endif %}
 {% endblock %}
