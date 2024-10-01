@@ -111,6 +111,7 @@ input:focus, select:focus {
     align-items: center;
     position: relative;
     padding-bottom: 10px;
+    max-width: 100px;
 }
 
 .radio-label input[type="radio"] {
