@@ -9,12 +9,12 @@
         <!-- Auswahl Divison -->
         <div style="margin-bottom: 10px;">
             <label class="radio-label">
-                <input type="radio" name="division" value="1" onclick="updateURLParameter('division', '1')" {% if division == '1' %}checked{% endif %}>
+                <input type="radio" name="division" value="1" {% if division == '1' %}checked{% endif %} onchange="this.form.submit();">
                 <span class="radio-custom"></span>
                 Division 1
             </label>
             <label class="radio-label">
-                <input type="radio" name="division" value="2" onclick="updateURLParameter('division', '2')" {% if division == '2' %}checked{% endif %}>
+                <input type="radio" name="division" value="2" {% if division == '2' %}checked{% endif %} onchange="this.form.submit();">
                 <span class="radio-custom"></span>
                 Division 2
             </label>
