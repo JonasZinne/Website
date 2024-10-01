@@ -3,21 +3,38 @@ document.querySelector("form")?.addEventListener("submit", function() {
     document.getElementById("loadingIndicator").style.display = "flex";
 });
 
+// show alert
+function showAlert(message, isError = false) {
+    const alertBox = document.getElementById("customAlert");
+    alertBox.textContent = message;
+
+    if (isError) {
+        alertBox.classList.add('error');
+    } else {
+        alertBox.classList.remove('error');
+    }
+
+    alertBox.classList.add('show');
+    setTimeout(() => {
+        alertBox.classList.remove('show');
+    }, 3000);
+}
+
 // copy to clipboard
 function copyToClipboard() {
     const textarea = document.getElementById("vetoResultsTextarea");
     
     let text = textarea.value.split('\n')
         .map(line => line.trim())
-        .filter(line => line.length > 0) 
+        .filter(line => line.length > 0)
         .join('\n');
 
     navigator.clipboard.writeText(text)
         .then(() => {
-            alert('Ergebnis wurde erfolgreich in die Zwischenablage kopiert.');
+            showAlert('Vetos wurden erfolgreich in die Zwischenablage kopiert.');
         })
         .catch(err => {
-            alert('Fehler beim Kopieren: ' + err);
+            showAlert('Fehler beim Kopieren: ' + err, true);
         });
 }
 

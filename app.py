@@ -14,7 +14,7 @@ def index():
 # Export Vetos
 @app.route("/export_vetos", methods=["GET", "POST"])
 def export_vetos():
-    division = request.args.get('division', '1')
+    division = request.args.get('division', session.get('division', '1'))
     teams = TEAMS_DIV1 if division == '1' else TEAMS_DIV2
     num_matches = len(teams) // 2
 

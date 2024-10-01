@@ -165,6 +165,28 @@ button:active, .button:active {
     transform: scale(0.97);
 }
 
+/* Alert */
+.alert {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #4a90e2;
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    z-index: 100;
+    display: none;
+}
+
+.alert.show {
+    display: block;
+}
+
+.alert.error {
+    background-color: #f44336;
+}
+
 /* Loading Indicator */
 #loadingIndicator {
     display: flex;
