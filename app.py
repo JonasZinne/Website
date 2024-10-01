@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request, send_file, session
+from flask import Flask, render_template, request, send_file, session, redirect, url_for
 from export_matches import main as export_matches_main
 from export_vetos import main as export_vetos_main, MAPS, TEAMS_DIV1, TEAMS_DIV2
 
@@ -14,14 +14,18 @@ def index():
 # Export Vetos
 @app.route("/export_vetos", methods=["GET", "POST"])
 def export_vetos():
-    veto_results = []
-
     division = request.args.get('division', '1')
     teams = TEAMS_DIV1 if division == '1' else TEAMS_DIV2
     num_matches = len(teams) // 2
 
     if request.method == "POST":
         veto_results = export_vetos_main(request.form, num_matches)
+        session['veto_results'] = veto_results
+        session['division'] = division
+        return redirect(url_for('export_vetos', division=division))
+
+    veto_results = session.pop('veto_results', [])
+    division = session.get('division', division)
 
     return render_template("export_vetos.html", maps=MAPS, teams=teams, veto_results=veto_results, division=division, num_matches=num_matches)
 
@@ -33,6 +37,8 @@ def export_matches():
         excel_file = export_matches_main(url)
         session['excel_file'] = excel_file
         session['file_exported'] = True
+        
+        return redirect(url_for('export_matches'))
 
     file_exported = session.get('file_exported', False)
     return render_template("export_matches.html", file_exported=file_exported)
