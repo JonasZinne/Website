@@ -61,5 +61,20 @@ def download_matches():
 def create_tournament():
     return render_template("create_tournament.html")
 
+# 404 - Not Found
+@app.errorhandler(404)
+def not_found(error):
+    return render_template("error.html", error_code=404, error_message="URL nicht gefunden"), 404
+
+# 403 - Forbidden
+@app.errorhandler(403)
+def forbidden(error):
+    return render_template("error.html", error_code=403, error_message="Zugriff wurde verweigert"), 403
+
+# 500 - Internal Server Error
+@app.errorhandler(500)
+def internal_error(error):
+    return render_template("error.html", error_code=500, error_message="interner Serverfehler ist aufgetreten"), 500
+
 if __name__ == "__main__":
     app.run(debug=True)
