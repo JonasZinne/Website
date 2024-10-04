@@ -1,15 +1,43 @@
 {% extends 'base.html' %}
 
-{% block title %}Control Panel{% endblock %}
+{% block title %}Dashboard{% endblock %}
 
 {% block content %}
+    <!-- Project V -->
     <section class="section">
-        <h2>Control Panel</h2>
+        <h2>
+            <img src="/static/images/logo_pv.png" alt="Logo Project V" class="section-icon"> 
+            Project V
+        </h2>
         
         <div class="dashboard-options">
             <a href="/export_vetos" class="button">Export Vetos</a>
             <a href="/export_matches" class="button">Export Matches</a>
             <a href="/create_tournament" class="button">Turnier anlegen</a>
+        </div>
+    </section>    
+
+    <!-- Valorant -->
+    <section class="section">
+        <h2>
+            <img src="/static/images/logo_val.jpeg" alt="Logo Valorant" class="section-icon"> 
+            Valorant
+        </h2>
+        
+        <div class="dashboard-options">
+            Coming Soon
+        </div>
+    </section>
+
+    <!-- Games -->
+    <section class="section">
+        <h2>
+            <img src="/static/images/logo_games.png" alt="Logo Games" class="section-icon"> 
+            Games
+        </h2>
+        
+        <div class="dashboard-options">
+            Coming Soon
         </div>
     </section>
 {% endblock %}

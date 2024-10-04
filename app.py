@@ -21,11 +21,11 @@ def export_vetos():
     if request.method == "POST":
         veto_results = export_vetos_main(request.form, num_matches)
         session['veto_results'] = veto_results
-        session['division'] = division
+        division = session.get('division', division)
         return redirect(url_for('export_vetos', division=division))
 
     veto_results = session.pop('veto_results', [])
-    division = session.get('division', division)
+    session['division'] = division
 
     return render_template("export_vetos.html", maps=MAPS, teams=teams, veto_results=veto_results, division=division, num_matches=num_matches)
 
