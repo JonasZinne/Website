@@ -61,6 +61,11 @@ def download_matches():
 def create_tournament():
     return render_template("create_tournament.html")
 
+# Jump and Run
+@app.route("/jump_and_run", methods=["GET"])
+def jump_and_run():
+    return render_template("jump_and_run.html")
+
 # 404 - Not Found
 @app.errorhandler(404)
 def not_found(error):
