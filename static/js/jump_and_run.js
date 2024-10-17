@@ -28,6 +28,8 @@ const floor = {
 
 let obstacles = [];
 
+let score = 0;
+
 function createObstacle() {
     const obstacle = {
         x: canvas.width,
@@ -94,11 +96,16 @@ function jump() {
 }
 
 function moveObstacles() {
-    obstacles.forEach((obstacle) => {
+    obstacles.forEach((obstacle, index) => {
         obstacle.x -= 3;
 
         if (obstacle.x + obstacle.width < 0) {
-            obstacles.shift();
+            obstacles.splice(index, 1);
+        }
+
+        if (!obstacle.passed && obstacle.x + obstacle.width < player.x) {
+            score++;
+            obstacle.passed = true;
         }
     });
 }
@@ -123,6 +130,7 @@ function resetGame() {
     player.dx = 0;
     player.dy = 0;
     obstacles = [];
+    score = 0;
     gameRunning = false;
     gameOver = false;
 }
@@ -145,12 +153,24 @@ function drawStartButton() {
     ctx.fillText("Starten", canvas.width / 2, canvas.height / 2);
 }
 
+function drawScore() {
+    ctx.fillStyle = "black";
+    ctx.font = "24px Arial";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "top";
+    ctx.fillText("Score: " + score, canvas.width / 2, 30);
+}
+
 function drawGameOver() {
     ctx.fillStyle = "red";
     ctx.font = "40px Arial";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    ctx.fillText("Game Over!", canvas.width / 2, canvas.height / 3);
+    ctx.fillText("Game Over!", canvas.width / 2, canvas.height / 4);
+
+    ctx.fillStyle = "black";
+    ctx.font = "24px Arial";
+    ctx.fillText("Score: " + score, canvas.width / 2, canvas.height / 2 - canvas.height / 8);
 
     const buttonWidth = 220;
     const buttonHeight = 50;
@@ -179,6 +199,7 @@ function gameLoop() {
         drawFloor();
         drawPlayer();
         drawObstacles();
+        drawScore();
     } else if (gameOver) {
         drawGameOver();
     } else {
