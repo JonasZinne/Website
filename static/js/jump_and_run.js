@@ -42,8 +42,9 @@ function createObstacle() {
 function startObstacleGeneration() {
     if (gameRunning) {
         createObstacle();
-        // const randomTime = Math.random() * (3000 - 1500) + 1500; // 1500-3000 ms
-        const randomTime = Math.random() * 3000; // 0-3000 ms
+
+        const minTimeout = 500;
+        const randomTime = Math.random() * 2000 + minTimeout; // 500-2500 ms
         setTimeout(startObstacleGeneration, randomTime);
     }
 }
@@ -127,22 +128,43 @@ function resetGame() {
 }
 
 function drawStartButton() {
-    ctx.fillStyle = "blue";
-    ctx.fillRect(canvas.width / 2 - 50, canvas.height / 2 - 25, 100, 50);
+    const buttonWidth = 120;
+    const buttonHeight = 50;
+    const buttonX = canvas.width / 2 - buttonWidth / 2;
+    const buttonY = canvas.height / 2 - buttonHeight / 2;
 
     ctx.fillStyle = "white";
-    ctx.font = "20px Arial";
-    ctx.fillText("Start", canvas.width / 2 - 25, canvas.height / 2 + 10);
+    ctx.fillRect(buttonX, buttonY, buttonWidth, buttonHeight);
+    ctx.strokeStyle = "black";
+    ctx.strokeRect(buttonX, buttonY, buttonWidth, buttonHeight);
+
+    ctx.fillStyle = "black";
+    ctx.font = "24px Arial";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText("Starten", canvas.width / 2, canvas.height / 2);
 }
 
 function drawGameOver() {
     ctx.fillStyle = "red";
-    ctx.font = "30px Arial";
-    ctx.fillText("Game Over!", canvas.width / 2 - 100, canvas.height / 2);
+    ctx.font = "40px Arial";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText("Game Over!", canvas.width / 2, canvas.height / 3);
+
+    const buttonWidth = 220;
+    const buttonHeight = 50;
+    const buttonX = canvas.width / 2 - buttonWidth / 2;
+    const buttonY = canvas.height / 2;
 
     ctx.fillStyle = "white";
-    ctx.font = "20px Arial";
-    ctx.fillText("Click to Restart", canvas.width / 2 - 80, canvas.height / 2 + 50);
+    ctx.fillRect(buttonX, buttonY, buttonWidth, buttonHeight);
+    ctx.strokeStyle = "black";
+    ctx.strokeRect(buttonX, buttonY, buttonWidth, buttonHeight);
+
+    ctx.fillStyle = "black";
+    ctx.font = "24px Arial";
+    ctx.fillText("Nochmal Spielen", canvas.width / 2, buttonY + buttonHeight / 2);
 }
 
 function gameLoop() {
@@ -168,12 +190,15 @@ function gameLoop() {
 
 document.addEventListener("keydown", (e) => {
     if (e.code === "Space") {
+        e.preventDefault();
         jump();
     }
     if ((e.code === "ArrowRight" || e.code === "KeyD") && gameRunning) {
+        e.preventDefault();
         player.dx = player.speed;
     }
     if ((e.code === "ArrowLeft" || e.code === "KeyA") && gameRunning) {
+        e.preventDefault();
         player.dx = -player.speed;
     }
 });
@@ -189,15 +214,27 @@ canvas.addEventListener("click", (e) => {
     const clickX = e.clientX - canvasRect.left;
     const clickY = e.clientY - canvasRect.top;
 
+    const startButtonWidth = 120;
+    const startButtonHeight = 50;
+    const startButtonX = canvas.width / 2 - startButtonWidth / 2;
+    const startButtonY = canvas.height / 2 - startButtonHeight / 2;
+
     if (!gameRunning && !gameOver && 
-        clickX > canvas.width / 2 - 50 && clickX < canvas.width / 2 + 50 &&
-        clickY > canvas.height / 2 - 25 && clickY < canvas.height / 2 + 25) {
+        clickX > startButtonX && clickX < startButtonX + startButtonWidth &&
+        clickY > startButtonY && clickY < startButtonY + startButtonHeight) {
         resetGame();
         gameRunning = true;
         startObstacleGeneration();
     }
 
-    if (gameOver) {
+    const restartButtonWidth = 220;
+    const restartButtonHeight = 50;
+    const restartButtonX = canvas.width / 2 - restartButtonWidth / 2;
+    const restartButtonY = canvas.height / 2;
+
+    if (gameOver &&
+        clickX > restartButtonX && clickX < restartButtonX + restartButtonWidth &&
+        clickY > restartButtonY && clickY < restartButtonY + restartButtonHeight) {
         resetGame();
         gameRunning = true;
         startObstacleGeneration();
