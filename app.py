@@ -56,10 +56,10 @@ def download_matches():
     else:
         return render_template("error.html", error_code=404, error_message="Datei nicht gefunden"), 404
 
-# Turnier anlegen
-@app.route("/create_tournament", methods=["GET"])
-def create_tournament():
-    return render_template("create_tournament.html")
+# Valorant Tracker
+@app.route("/valorant_tracker", methods=["GET"])
+def valorant_tracker():
+    return render_template("valorant_tracker.html")
 
 # Jump and Run
 @app.route("/jump_and_run", methods=["GET"])
