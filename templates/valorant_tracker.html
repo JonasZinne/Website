@@ -5,7 +5,14 @@
 {% block content %}
     <section class="section">
         <h2>Valorant Tracker</h2>
-        
-        <p>Diese Funktion ist geplant...</p>
+
+        <p>Damage per Round: {{ data.damage_per_round }}</p>
+        <p>K/D Ratio: {{ data.kd_ratio }}</p>
+        <p>KAD Ratio: {{ data.kad_ratio }}</p>
+        <p>Headshot Percentage: {{ data.headshot_percent }}</p>
+        <p>KAST: {{ data.kast_percent }}</p>
+        <p>DD (Delta): {{ data.dd_delta }}</p>
+        <p>ACS: {{ data.acs_score }}</p>
+        <p>Rank: {{ data.rank }}</p>
     </section>
 {% endblock %}

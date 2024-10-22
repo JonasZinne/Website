@@ -2,6 +2,7 @@ import os
 from flask import Flask, render_template, request, send_file, session, redirect, url_for
 from export_matches import main as export_matches_main
 from export_vetos import main as export_vetos_main, MAPS, TEAMS_DIV1, TEAMS_DIV2
+from valorant_tracker import get_valorant_data
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
@@ -59,7 +60,9 @@ def download_matches():
 # Valorant Tracker
 @app.route("/valorant_tracker", methods=["GET"])
 def valorant_tracker():
-    return render_template("valorant_tracker.html")
+    data = get_valorant_data()
+
+    return render_template("valorant_tracker.html", data=data)
 
 # Jump and Run
 @app.route("/jump_and_run", methods=["GET"])
