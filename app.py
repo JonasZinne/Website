@@ -13,6 +13,28 @@ app.secret_key = os.urandom(24)
 def index():
     return render_template("index.html")
 
+# Count Games 
+@app.route("/count_games", methods=["GET", "POST"])
+def count_games():
+    session.setdefault("wins", 0)
+    session.setdefault("loses", 0)
+    session.setdefault("timestamp", None)
+
+    if request.method == "POST":
+        if "win" in request.form:
+            session["wins"] += 1
+        elif "lose" in request.form:
+            session["loses"] += 1
+        elif "reset" in request.form:
+            session["wins"] = 0
+            session["loses"] = 0
+            session["timestamp"] = None
+        
+        if "reset" not in request.form:
+            session["timestamp"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    return render_template("count_games.html", wins=session["wins"], loses=session["loses"], timestamp=session["timestamp"])
+
 # Export Vetos
 @app.route("/export_vetos", methods=["GET", "POST"])
 def export_vetos():
@@ -57,28 +79,6 @@ def download_matches():
         return send_file(file_path, as_attachment=True)
     else:
         return render_template("error.html", error_code=404, error_message="Datei nicht gefunden"), 404
-
-# Count Games 
-@app.route("/count_games", methods=["GET", "POST"])
-def count_games():
-    session.setdefault("wins", 0)
-    session.setdefault("loses", 0)
-    session.setdefault("timestamp", None)
-
-    if request.method == "POST":
-        if "win" in request.form:
-            session["wins"] += 1
-        elif "lose" in request.form:
-            session["loses"] += 1
-        elif "reset" in request.form:
-            session["wins"] = 0
-            session["loses"] = 0
-            session["timestamp"] = None
-        
-        if "reset" not in request.form:
-            session["timestamp"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-    return render_template("count_games.html", wins=session["wins"], loses=session["loses"], timestamp=session["timestamp"])
 
 # Valorant Tracker
 @app.route("/valorant_tracker", methods=["GET"])
