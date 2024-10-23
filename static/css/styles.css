@@ -53,8 +53,8 @@ footer {
 
 /* Main */
 main {
-    padding: 30px;
-    max-width: 1500px;
+    padding: 40px;
+    max-width: 1600px;
     margin: 0 auto;
     padding-bottom: 50px;
 }
@@ -63,7 +63,7 @@ main {
 .section {
     background-color: #ffffff;
     padding: 20px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     border-radius: 12px;
 }
 
@@ -107,8 +107,8 @@ input, select {
 
 .url-input {
     max-width: 600px;
-    padding: 12px;
-    margin-bottom: 10px;
+    padding: 10px;
+    margin-bottom: 20px;
 }
 
 .number-input {
@@ -227,7 +227,7 @@ button:active, .button:active {
 
 #loadingIndicator p {
     font-size: 1.5em;
-    margin-top: 10px;
+    margin: 10px;
 }
 
 /* Spinner Animation */

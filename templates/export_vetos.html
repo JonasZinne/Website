@@ -7,7 +7,7 @@
         <h2>Vetos exportieren</h2>
         
         <!-- Auswahl Divison -->
-        <div style="margin-bottom: 10px;">
+        <div style="margin-bottom: 20px;">
             <label class="radio-label">
                 <input type="radio" name="division" value="1" {% if division == '1' %}checked{% endif %} onchange="this.form.submit();">
                 <span class="radio-custom"></span>
@@ -21,7 +21,7 @@
         </div>
         
         <form method="POST" action="/export_vetos?division={{ division }}">
-            <table style="margin-bottom: 20px;">
+            <table style="margin-bottom: 10px;">
                 <tr>
                     <td><strong><label for="matchday">Matchday:</label></strong></td>
                     <td>
@@ -30,11 +30,11 @@
                 </tr>
             </table>
 
-            <div class="veto-grid">
+            <div class="veto-grid" style="margin-bottom: 20px;">
                 {% for i in range(num_matches) %}                
                 <table>
                     <tr>
-                        <td colspan="2" style="text-align: center; padding-bottom: 10px;"><strong>Match {{ i + 1 }}</strong></td>
+                        <td colspan="2" style="text-align: center;"><strong>Match {{ i + 1 }}</strong></td>
                     </tr>
 
                     <!-- Auswahl Team A und B  -->
@@ -100,7 +100,7 @@
                 {% endfor %}
             </div>
         
-            <button type="submit" style="margin-top: 20px;">Exportieren</button>
+            <button type="submit">Exportieren</button>
         </form>
     </section>
 
