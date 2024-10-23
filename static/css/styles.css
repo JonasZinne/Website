@@ -1,4 +1,8 @@
 /* General */
+* {
+    box-sizing: border-box;
+}
+
 body {
     font-family: 'Arial', sans-serif;
     margin: 0;
@@ -80,6 +84,7 @@ main {
 .dashboard-options {
     display: flex;
     gap: 20px;
+    flex-wrap: wrap;
 }
 
 /* Canvas */
@@ -103,7 +108,7 @@ input, select {
 .url-input {
     max-width: 600px;
     padding: 12px;
-    margin-right: 10px;
+    margin-bottom: 10px;
 }
 
 .number-input {
