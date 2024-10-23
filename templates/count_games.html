@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Count Games{% endblock %}
+
+{% block content %}
+    <section class="section">
+        <h2>Count Games</h2>
+
+        <div class="game-stats">
+            <table>
+                <tr>
+                    <td><strong>Wins:</strong></td>
+                    <td>{{ wins }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Loses:</strong></td>
+                    <td>{{ loses }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Zeit:</strong></td>
+                    <td>{{ timestamp if timestamp else "Unbekannt" }}</td>
+                </tr>
+            </table>
+        </div>
+
+        <form method="POST" class="button-form">
+            <button type="submit" name="win" class="win-btn">Win</button>
+            <button type="submit" name="lose" class="lose-btn">Lose</button>
+            <button type="submit" name="reset" class="reset-btn">Reset</button>
+        </form>
+    </section>
+
+    <style>
+        .win-btn {
+            background-color: #4CAF50;
+            margin-right: 10px;
+        }
+
+        .lose-btn {
+            background-color: #f44336;
+            margin-right: 10px;
+        }
+
+        .win-btn:hover {
+            background-color: #45a049;
+        }
+
+        .lose-btn:hover {
+            background-color: #e41b0a;
+        }
+    </style>
+{% endblock %}
