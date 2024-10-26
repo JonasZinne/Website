@@ -81,10 +81,15 @@ def download_matches():
         return render_template("error.html", error_code=404, error_message="Datei nicht gefunden"), 404
 
 # Valorant Tracker
-@app.route("/valorant_tracker", methods=["GET"])
+@app.route("/valorant_tracker", methods=["GET", "POST"])
 def valorant_tracker():
-    data = get_valorant_data()
+    data = {}
 
+    if request.method == "POST":
+        player_name = request.form.get("player_name")
+        player_tag = request.form.get("player_tag")
+        data = get_valorant_data(player_name, player_tag)
+        
     return render_template("valorant_tracker.html", data=data)
 
 # Jump and Run
