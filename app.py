@@ -88,6 +88,8 @@ def valorant_tracker():
     if request.method == "POST":
         player_name = request.form.get("player_name")
         player_tag = request.form.get("player_tag")
+        player_tag = player_tag.lstrip('#')
+        
         data = get_valorant_data(player_name, player_tag)
         
     return render_template("valorant_tracker.html", data=data)

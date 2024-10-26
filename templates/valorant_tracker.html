@@ -9,11 +9,13 @@
         <form method="POST">
             <div style="margin-bottom: 20px;"> 
                 <input type="text" id="player_name" name="player_name" class="player_name-input"
-                    autocomplete="off" placeholder="Name" required
+                    autocomplete="off" placeholder="Name"
+                    minlength="3" maxlength="20" required
                 >
 
                 <input type="text" id="player_tag" name="player_tag" class="player_tag-input"
-                    autocomplete="off" placeholder="Tag" required
+                    autocomplete="off" placeholder="Tag"
+                    minlength="3" maxlength="5" required
                 >
             </div>
 
@@ -25,40 +27,46 @@
 
     {% if data %}
         <section class="section">
-            <table>
-                <tr>
-                    <td><strong>Rank:</strong></td>
-                    <td>{{ data.rank }}</td>
-                </tr>
-                <tr>
-                    <td><strong>K/D:</strong></td>
-                    <td>{{ data.kd }}</td>
-                </tr>
-                <tr>
-                    <td><strong>KAD:</strong></td>
-                    <td>{{ data.kad }}</td>
-                </tr>
-                <tr>
-                    <td><strong>Damage/Round:</strong></td>
-                    <td>{{ data.damage_round }}</td>
-                </tr>
-                <tr>
-                    <td><strong>DDΔ/Round:</strong></td>
-                    <td>{{ data.dd_delta }}</td>
-                </tr>
-                <tr>
-                    <td><strong>ACS:</strong></td>
-                    <td>{{ data.acs }}</td>
-                </tr>
-                <tr>
-                    <td><strong>KAST:</strong></td>
-                    <td>{{ data.kast }}</td>
-                </tr>
-                <tr>
-                    <td><strong>Headshot:</strong></td>
-                    <td>{{ data.headshot }}</td>
-                </tr>
-            </table>
+            <h3>Stats</h3>
+
+            {% if data.error %}
+                <div class="error">{{ data.error }}</div>
+            {% else %}
+                <table>
+                    <tr>
+                        <td><strong>Rank:</strong></td>
+                        <td>{{ data.rank }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>K/D:</strong></td>
+                        <td>{{ data.kd }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>KAD:</strong></td>
+                        <td>{{ data.kad }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Damage/Round:</strong></td>
+                        <td>{{ data.damage_round }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>DDΔ/Round:</strong></td>
+                        <td>{{ data.dd_delta }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ACS:</strong></td>
+                        <td>{{ data.acs }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>KAST:</strong></td>
+                        <td>{{ data.kast }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Headshot:</strong></td>
+                        <td>{{ data.headshot }}</td>
+                    </tr>
+                </table>
+            {% endif %}
         </section>
     {% endif %}
 {% endblock %}

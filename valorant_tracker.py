@@ -19,12 +19,17 @@ def get_valorant_data(player_name, player_tag):
         with browser.new_page() as page:
             page.goto(url)
 
-            def get_inner_text(selector, default_text):
-                element = page.query_selector(selector)
-                return element.inner_text() if element else default_text
-            
+            error_selector = "#app > div.trn-wrapper > div.trn-container > div > main > div.content.content--error"
+            if page.query_selector(error_selector):
+                if page.query_selector(error_selector + " > div > span"):
+                    return {"error": "Profil ist privat"}
+                elif page.query_selector(error_selector + " > span"):
+                    return {"error": "RiotID nicht gefunden"}
+                else:
+                    return {"error": "Unbekannter Fehler"}
+
             results = {
-                key: get_inner_text(selector, f"{key} nicht gefunden")
+                key: page.query_selector(selector).inner_text() if page.query_selector(selector) else f"{key} nicht gefunden"
                 for key, selector in selectors.items()
             }
         
