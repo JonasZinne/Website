@@ -1,4 +1,18 @@
 /* General */
+:root {
+    --primary-color: #4a90e2;
+    --secondary-color: #03a9f4;
+    --primary-dark: #1f1f1f;
+    --secondary-dark: #484848;
+    --background-color: #ccf2f4;
+    --white: #ffffff;
+    --black: #333;
+    --error-color: #f44336;
+    --font-size-base: 16px;
+    --font-size-large: 1.8em;
+    --font-size-medium: 1.5em;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -7,18 +21,18 @@ body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #ccf2f4;
+    background-color: var(--background-color);
     line-height: 1.6;
-    color: #333;
+    color: var(--black);
 }
 
 /* Header */
 header {
-    background: linear-gradient(135deg, #1f1f1f, #484848);
-    color: white;
+    background: linear-gradient(135deg, var(--primary-dark), var(--secondary-dark));
+    color: var(--white);
     padding: 20px;
     text-align: center;
-    border-bottom: 5px solid #03a9f4;
+    border-bottom: 5px solid var(--secondary-color);
 }
 
 header img {
@@ -40,15 +54,18 @@ header h1 {
 
 /* Footer */
 footer {
-    background-color: #1f1f1f;
-    color: white;
-    text-align: center;
+    background-color: var(--primary-dark);
+    color: var(--white);
     position: fixed;
     width: 100%;
     bottom: 0;
-    font-size: 14px;
-    border-top: 5px solid #03a9f4;
+    font-size: var(--font-size-base);
+    border-top: 5px solid var(--secondary-color);
     height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
 /* Main */
@@ -56,12 +73,11 @@ main {
     padding: 40px;
     max-width: 1600px;
     margin: 0 auto;
-    padding-bottom: 50px;
 }
 
 /* Section */
 .section {
-    background-color: #ffffff;
+    background-color: var(--white);
     padding: 20px;
     margin-bottom: 20px;
     border-radius: 12px;
@@ -69,16 +85,12 @@ main {
 
 .section h2 {
     margin-top: 0;
-    font-size: 1.8em;
-    display: flex;
-    align-items: center;
+    font-size: var(--font-size-large);
 }
 
 .section h3 {
     margin-top: 0;
     font-size: 1.2em;
-    display: flex;
-    align-items: center;
 }
 
 .section-icon {
@@ -103,7 +115,7 @@ main {
 
 /* Canvas */
 canvas {
-    background: #ccf2f4;
+    background: var(--background-color);
     width: 100%;
     height: auto;
     max-height: 400px;
@@ -112,8 +124,8 @@ canvas {
 /* Input & Select */
 input, select {
     width: 100%; 
-    font-size: 16px;
-    border: 2px solid #1f1f1f;
+    font-size: var(--font-size-base);
+    border: 2px solid var(--primary-dark);
     border-radius: 8px;
     transition: border-color 0.3s ease;
     outline: none;
@@ -146,7 +158,7 @@ select {
 }
 
 input:focus, select:focus {
-    border-color: #4a90e2;
+    border-color: var(--primary-color);
     outline: none;
 }
 
@@ -198,13 +210,13 @@ input:focus, select:focus {
 
 /* Button */
 button, .button {
-    background-color: #4a90e2;
-    color: white;
+    background-color: var(--primary-color);
+    color: var(--white);
     padding: 12px 25px;
     border: none;
     border-radius: 50px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: var(--font-size-base);
     text-decoration: none;
     display: inline-block;
     transition: background-color 0.3s ease, transform 0.2s ease;
@@ -224,8 +236,8 @@ button:active, .button:active {
     top: 20px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: #4a90e2;
-    color: white;
+    background-color: var(--primary-color);
+    color: var(--white);
     padding: 20px;
     border-radius: 8px;
     z-index: 100;
@@ -237,15 +249,15 @@ button:active, .button:active {
 }
 
 .alert.error {
-    background-color: #f44336;
+    background-color: var(--error-color);
 }
 
 /* Error Message */
 .error {
     display: inline-block;
-    color: red;
+    color: var(--error-color);
     padding: 5px;
-    border: 2px solid red;
+    border: 2px solid var(--error-color);
     border-radius: 5px;
     font-weight: bold;
     text-align: center;
@@ -276,7 +288,7 @@ button:active, .button:active {
     width: 50px;
     height: 50px;
     border: 8px solid rgba(0, 0, 0, 0.1);
-    border-top: 8px solid #333;
+    border-top: 8px solid var(--black);
     border-radius: 50%;
     animation: spin 1s linear infinite;
 }
