@@ -12,9 +12,8 @@ let player = {
     color: "black",
     dy: 0,
     dx: 0,
-    speed: 5,
     gravity: 0.5,
-    jumpStrength: -10,
+    jumpStrength: -14,
     grounded: false
 };
 
@@ -27,7 +26,6 @@ const floor = {
 };
 
 let obstacles = [];
-
 let score = 0;
 
 function createObstacle() {
@@ -66,13 +64,6 @@ function drawObstacles() {
         ctx.fillStyle = obstacle.color;
         ctx.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
     });
-}
-
-function movePlayer() {
-    player.x += player.dx;
-
-    if (player.x < 0) player.x = 0;
-    if (player.x + player.width > canvas.width) player.x = canvas.width - player.width;
 }
 
 function applyGravity() {
@@ -127,7 +118,6 @@ function checkCollision() {
 function resetGame() {
     player.x = 50;
     player.y = floor.y - player.height;
-    player.dx = 0;
     player.dy = 0;
     obstacles = [];
     score = 0;
@@ -192,7 +182,6 @@ function gameLoop() {
 
     if (gameRunning) {
         applyGravity();
-        movePlayer();
         moveObstacles();
         checkCollision();
 
@@ -215,40 +204,12 @@ document.addEventListener("keydown", (e) => {
         e.preventDefault();
         jump();
     }
-    if ((e.code === "ArrowRight" || e.code === "KeyD") && gameRunning) {
-        e.preventDefault();
-        player.dx = player.speed;
-    }
-    if ((e.code === "ArrowLeft" || e.code === "KeyA") && gameRunning) {
-        e.preventDefault();
-        player.dx = -player.speed;
-    }
-});
-
-document.addEventListener("keyup", (e) => {
-    if (e.code === "ArrowRight" || e.code === "KeyD" || e.code === "ArrowLeft" || e.code === "KeyA") {
-        player.dx = 0;
-    }
 });
 
 // Event Listener für Touch-Events
-canvas.addEventListener("touchstart", (e) => {
+document.addEventListener("touchstart", (e) => {
     e.preventDefault();
-    const touch = e.touches[0];
-    const rect = canvas.getBoundingClientRect();
-
-    if (touch.clientX < rect.left + rect.width / 2) {
-        player.dx = -player.speed;
-    } else {
-        player.dx = player.speed;
-    }
-
     jump();
-});
-
-canvas.addEventListener("touchend", (e) => {
-    e.preventDefault();
-    player.dx = 0;
 });
 
 canvas.addEventListener("click", (e) => {
