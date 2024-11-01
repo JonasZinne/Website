@@ -15,9 +15,15 @@ def get_valorant_data(player_name, player_tag):
     url = f"https://tracker.gg/valorant/profile/riot/{player_name}%23{player_tag}/overview"
     
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False)
-        with browser.new_page() as page:
+        browser = p.chromium.launch(headless=True)
+        
+        context = browser.new_context(
+            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36"
+        )
+
+        with context.new_page() as page:
             page.goto(url)
+            page.wait_for_load_state("networkidle")
 
             error_selector = "#app > div.trn-wrapper > div.trn-container > div > main > div.content.content--error"
             if page.query_selector(error_selector):
