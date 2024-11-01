@@ -18,6 +18,7 @@ def index():
 def count_games():
     session.setdefault("wins", 0)
     session.setdefault("loses", 0)
+    session.setdefault("mvp", 0)
     session.setdefault("timestamp", None)
 
     if request.method == "POST":
@@ -25,15 +26,27 @@ def count_games():
             session["wins"] += 1
         elif "lose" in request.form:
             session["loses"] += 1
+        elif "mvp" in request.form:
+            session["mvp"] += 1
         elif "reset" in request.form:
             session["wins"] = 0
             session["loses"] = 0
+            session["mvp"] = 0
             session["timestamp"] = None
         
         if "reset" not in request.form:
             session["timestamp"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    return render_template("count_games.html", wins=session["wins"], loses=session["loses"], timestamp=session["timestamp"])
+    # Winrate
+    total_games = session["wins"] + session["loses"]
+    win_rate = (session["wins"] / total_games * 100) if total_games > 0 else 0
+
+    return render_template("count_games.html", 
+                           wins=session["wins"], 
+                           loses=session["loses"], 
+                           mvp=session["mvp"],
+                           timestamp=session["timestamp"],
+                           win_rate=win_rate)
 
 # Export Vetos
 @app.route("/export_vetos", methods=["GET", "POST"])

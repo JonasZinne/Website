@@ -17,15 +17,27 @@
                     <td>{{ loses }}</td>
                 </tr>
                 <tr>
+                    <td><strong>Winrate:</strong></td>
+                    <td>{{ win_rate | round(2) }}%</td>
+                </tr>
+                <tr>
+                    <td><strong>MVPs:</strong></td>
+                    <td>{{ mvp }}</td>
+                </tr>
+                <tr>
                     <td><strong>Zeit:</strong></td>
                     <td>{{ timestamp if timestamp else "Unbekannt" }}</td>
                 </tr>
             </table>
         </div>
+    
+        <form method="POST">
+            <div class="flex-items" style="margin-bottom: 20px;">
+                <button type="submit" name="win" class="win-btn">Win</button>
+                <button type="submit" name="lose" class="lose-btn">Lose</button>
+                <button type="submit" name="mvp" class="mvp-btn">MVP</button>
+            </div>
 
-        <form method="POST" class="flex-items">
-            <button type="submit" name="win" class="win-btn">Win</button>
-            <button type="submit" name="lose" class="lose-btn">Lose</button>
             <button type="submit" name="reset" class="reset-btn">Reset</button>
         </form>
     </section>
@@ -39,12 +51,20 @@
             background-color: #f44336;
         }
 
+        .mvp-btn {
+            background-color: #6F42C1;
+        }
+
         .win-btn:hover {
             background-color: #45a049;
         }
 
         .lose-btn:hover {
             background-color: #e41b0a;
+        }
+
+        .mvp-btn:hover {
+            background-color: #5A31A5;
         }
     </style>
 {% endblock %}
