@@ -94,6 +94,13 @@ main {
     flex-wrap: wrap;
 }
 
+/* Flex Items */
+.flex-items {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
 /* Canvas */
 canvas {
     background: #ccf2f4;
@@ -175,6 +182,12 @@ input:focus, select:focus {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
     gap: 20px;
+}
+
+@media (max-width: 400px) {
+    .veto-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
 }
 
 .veto-grid > table {

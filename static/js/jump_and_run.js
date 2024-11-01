@@ -209,6 +209,7 @@ function gameLoop() {
     requestAnimationFrame(gameLoop);
 }
 
+// Event Listener für Tastatur
 document.addEventListener("keydown", (e) => {
     if (e.code === "Space") {
         e.preventDefault();
@@ -228,6 +229,26 @@ document.addEventListener("keyup", (e) => {
     if (e.code === "ArrowRight" || e.code === "KeyD" || e.code === "ArrowLeft" || e.code === "KeyA") {
         player.dx = 0;
     }
+});
+
+// Event Listener für Touch-Events
+canvas.addEventListener("touchstart", (e) => {
+    e.preventDefault();
+    const touch = e.touches[0];
+    const rect = canvas.getBoundingClientRect();
+
+    if (touch.clientX < rect.left + rect.width / 2) {
+        player.dx = -player.speed;
+    } else {
+        player.dx = player.speed;
+    }
+
+    jump();
+});
+
+canvas.addEventListener("touchend", (e) => {
+    e.preventDefault();
+    player.dx = 0;
 });
 
 canvas.addEventListener("click", (e) => {
